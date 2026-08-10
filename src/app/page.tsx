@@ -61,10 +61,10 @@ export default function LandingPage() {
             <Link href="#guidelines" className="text-[15px] font-medium text-zinc-800 hover:text-black transition-colors">
               Guidelines
             </Link>
-            <Link href="#hardware" className="text-[15px] font-medium text-zinc-800 hover:text-black transition-colors">
+            <Link href="/devices" className="text-[15px] font-medium text-zinc-800 hover:text-black transition-colors">
               Devices
             </Link>
-            <Link href="#payouts" className="text-[15px] font-medium text-zinc-800 hover:text-black transition-colors">
+            <Link href="/payouts" className="text-[15px] font-medium text-zinc-800 hover:text-black transition-colors">
               Payouts
             </Link>
             <Link href="#community" className="text-[15px] font-medium text-zinc-800 hover:text-black transition-colors">
