@@ -58,7 +58,7 @@ export default function LandingPage() {
           </div>
 
           <nav className="hidden md:flex gap-8">
-            <Link href="#guidelines" className="text-[15px] font-medium text-zinc-800 hover:text-black transition-colors">
+            <Link href="/guidelines" className="text-[15px] font-medium text-zinc-800 hover:text-black transition-colors">
               Guidelines
             </Link>
             <Link href="#hardware" className="text-[15px] font-medium text-zinc-800 hover:text-black transition-colors">
@@ -245,34 +245,17 @@ export default function LandingPage() {
               </div>
             </div>
             
-            {/* Mock Dashboard UI Graphic (kept dark for contrast) */}
-            <div className="relative rounded-2xl border border-zinc-200 bg-zinc-950 p-2 shadow-2xl overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/5 to-transparent pointer-events-none" />
-              <div className="h-8 w-full border-b border-zinc-800 flex items-center px-4 gap-2 mb-2">
-                <div className="h-3 w-3 rounded-full bg-rose-500/50" />
-                <div className="h-3 w-3 rounded-full bg-amber-500/50" />
-                <div className="h-3 w-3 rounded-full bg-emerald-500/50" />
-                <div className="ml-4 font-mono text-[10px] text-zinc-600">creator_portal_v2.4</div>
-              </div>
-              <div className="p-4 space-y-4">
-                <div className="h-24 w-full rounded-xl border border-cyan-500/30 bg-cyan-950/30 flex items-center justify-center flex-col relative overflow-hidden">
-                   <div className="absolute inset-0 bg-[linear-gradient(to_right,#0891b233_1px,transparent_1px),linear-gradient(to_bottom,#0891b233_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
-                   <span className="font-mono text-cyan-400 text-xs z-10 font-bold mb-1">UPLOADING VIDEO...</span>
-                   <div className="w-48 h-1 bg-zinc-800 rounded-full z-10 overflow-hidden">
-                     <div className="h-full bg-cyan-400 w-2/3 animate-pulse" />
-                   </div>
-                </div>
-                <div className="flex gap-4">
-                  <div className="h-32 flex-1 rounded-xl border border-zinc-800 bg-zinc-900/50 p-4">
-                    <div className="text-[10px] font-mono text-zinc-500 uppercase mb-2">Total Uploads</div>
-                    <div className="text-2xl font-bold text-white">48</div>
-                  </div>
-                  <div className="h-32 flex-1 rounded-xl border border-zinc-800 bg-zinc-900/50 p-4">
-                     <div className="text-[10px] font-mono text-zinc-500 uppercase mb-2">Pending Payouts</div>
-                    <div className="text-2xl font-bold text-emerald-400">$320</div>
-                  </div>
-                </div>
-              </div>
+            {/* Dashboard Video */}
+            <div className="relative rounded-2xl border border-zinc-200 shadow-2xl overflow-hidden">
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-auto object-cover"
+              >
+                <source src="/context_CREATOR_DASHBOARD_Tra.mp4" type="video/mp4" />
+              </video>
             </div>
           </div>
         </section>
@@ -486,7 +469,7 @@ export default function LandingPage() {
             </div>
             <div className="flex flex-col gap-4">
               <h4 className="text-[11px] font-mono uppercase tracking-widest text-zinc-500 mb-2">Legal</h4>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Upload Guidelines</Link>
+              <Link href="/guidelines" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Upload Guidelines</Link>
               <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Data Ethics</Link>
               <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Terms of Service</Link>
               <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Privacy Policy</Link>
