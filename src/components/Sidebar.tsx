@@ -73,22 +73,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* Brand Header */}
       <div className="flex h-20 items-center justify-between border-b border-zinc-800/80 px-6">
         <div className="flex items-center gap-3">
-          <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-white shadow-[0_0_20px_rgba(255,255,255,0.1)]">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-black">
-              <path d="M3 6C3 6 7 2 12 6C17 10 21 6 21 6" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
-              <path d="M3 12C3 12 7 8 12 12C17 16 21 12 21 12" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
-              <path d="M3 18C3 18 7 14 12 18C17 22 21 18 21 18" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
-            </svg>
-            <span className="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75"></span>
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-cyan-500"></span>
-            </span>
+          <div className="flex items-center mr-3">
+            <img src="/logo.png" alt="Dave Logo" className="h-10 w-auto object-contain invert" />
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="text-sm font-black tracking-wider text-zinc-100 uppercase">
-                DAVE
-              </span>
               <span className="rounded bg-cyan-500/20 px-1 py-0.2 font-mono text-[9px] font-bold text-cyan-400 border border-cyan-500/30">
                 CREATOR
               </span>

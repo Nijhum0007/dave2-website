@@ -54,14 +54,7 @@ export default function LandingPage() {
       >
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
           <div className="flex items-center gap-3">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-black">
-              <path d="M3 6C3 6 7 2 12 6C17 10 21 6 21 6" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
-              <path d="M3 12C3 12 7 8 12 12C17 16 21 12 21 12" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
-              <path d="M3 18C3 18 7 14 12 18C17 22 21 18 21 18" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
-            </svg>
-            <span className="font-sans text-xl font-bold tracking-tight text-black">
-              Dave
-            </span>
+            <img src="/logo.png" alt="Dave Logo" className="h-24 w-auto object-contain" />
           </div>
 
           <nav className="hidden md:flex gap-8">

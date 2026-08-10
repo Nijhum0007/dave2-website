@@ -73,17 +73,10 @@ export const AuthView: React.FC<AuthViewProps> = ({ onLoginSuccess }) => {
 
         <div className="rounded-3xl border border-zinc-800/80 bg-zinc-900/50 p-8 shadow-2xl backdrop-blur-2xl">
           {/* Header Brand */}
-          <div className="text-center mb-8">
-            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-lg">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-black">
-                <path d="M3 6C3 6 7 2 12 6C17 10 21 6 21 6" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
-                <path d="M3 12C3 12 7 8 12 12C17 16 21 12 21 12" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
-                <path d="M3 18C3 18 7 14 12 18C17 22 21 18 21 18" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
-              </svg>
+          <div className="text-center mb-8 flex flex-col items-center">
+            <div className="mx-auto mb-4 flex justify-center">
+              <img src="/logo.png" alt="Dave Logo" className="h-16 w-auto object-contain invert" />
             </div>
-            <h1 className="text-xl font-black tracking-wider text-zinc-100 uppercase">
-              DAVE
-            </h1>
             <p className="mt-1 text-xs text-zinc-400">
               {isLogin
                 ? "Physical AI Data Collection Portal"
