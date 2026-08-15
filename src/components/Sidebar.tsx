@@ -20,6 +20,8 @@ interface SidebarProps {
   setActiveTab: (tab: string) => void;
   operator: OperatorProfile;
   onLogout: () => void;
+  currentEarnings: number;
+  liveRecipesCount: number;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -27,6 +29,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
   setActiveTab,
   operator,
   onLogout,
+  currentEarnings,
+  liveRecipesCount,
 }) => {
   const navItems = [
     {
@@ -38,25 +42,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
     },
     {
       id: "recipes",
-      label: "Active Recipes",
+      label: "Available Tasks",
       icon: ScrollText,
-      badge: "6 Live",
+      badge: `${liveRecipesCount} Live`,
       description: "Task Instructions & Payouts",
     },
     {
       id: "upload",
-      label: "Upload Data",
+      label: "Submit Video",
       icon: UploadCloud,
-      badge: "LeRobot",
-      badgeColor: "bg-cyan-500/20 text-cyan-400 border border-cyan-500/30",
-      description: "Multimodal Ingest Tool",
+      badge: null,
+      description: "Paste your drive link",
     },
     {
       id: "payouts-qa",
       label: "Payouts & QA",
       icon: DollarSign,
-      badge: "$4,890",
-      badgeColor: "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30",
+      badge: `$${currentEarnings.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`,
+      badgeColor: "bg-emerald-50 text-emerald-600 border border-emerald-200",
       description: "QA Feedback & Payments",
     },
     {
@@ -69,16 +72,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
   ];
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-40 flex w-72 flex-col border-r border-zinc-800/80 bg-zinc-950/95 backdrop-blur-2xl transition-all duration-300">
+    <aside className="fixed inset-y-0 left-0 z-40 flex w-72 flex-col border-r border-zinc-200 bg-zinc-50/95 backdrop-blur-2xl transition-all duration-300">
       {/* Brand Header */}
-      <div className="flex h-20 items-center justify-between border-b border-zinc-800/80 px-6">
+      <div className="flex h-20 items-center justify-between border-b border-zinc-200 px-6">
         <div className="flex items-center gap-3">
           <div className="flex items-center mr-3">
             <img src="/logo.png" alt="Dave Logo" className="h-10 w-auto object-contain invert" />
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="rounded bg-cyan-500/20 px-1 py-0.2 font-mono text-[9px] font-bold text-cyan-400 border border-cyan-500/30">
+              <span className="rounded bg-black px-1 py-0.2 font-mono text-[9px] font-bold text-white border border-black">
                 CREATOR
               </span>
             </div>
@@ -87,19 +90,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
       </div>
 
-      {/* Rig Telemetry Mini-Card */}
-      <div className="mx-4 my-3 rounded-xl border border-zinc-800/80 bg-zinc-900/50 p-3 text-xs">
-        <div className="flex items-center justify-between">
-          <span className="text-[11px] font-medium text-zinc-400">Assigned Rig:</span>
-          <span className="font-mono text-[11px] font-bold text-cyan-400">RIG-042-ALPHA</span>
-        </div>
-        <div className="mt-2 flex items-center justify-between text-[10px] text-zinc-500 font-mono">
-          <span className="flex items-center gap-1">
-            <Zap className="h-3 w-3 text-emerald-400" /> 60 FPS RGB+Depth
-          </span>
-          <span className="text-emerald-400 font-semibold">Ready</span>
-        </div>
-      </div>
+
 
       {/* Navigation Links */}
       <nav className="flex-1 space-y-1.5 px-3 py-2">
@@ -114,19 +105,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`group flex w-full items-center justify-between rounded-xl px-3.5 py-3 text-left transition-all duration-150 ${
-                isActive
-                  ? "border border-cyan-500/30 bg-cyan-950/30 text-zinc-100 shadow-[0_0_20px_rgba(0,240,255,0.15)]"
-                  : "border border-transparent text-zinc-400 hover:border-zinc-800/80 hover:bg-zinc-900/60 hover:text-zinc-200"
-              }`}
+              className={`group flex w-full items-center justify-between rounded-xl px-3.5 py-3 text-left transition-all duration-150 ${isActive
+                  ? "border border-black bg-zinc-100 text-zinc-900 shadow-sm"
+                  : "border border-transparent text-zinc-500 hover:border-zinc-200 hover:bg-white hover:text-zinc-800"
+                }`}
             >
               <div className="flex items-center gap-3">
                 <div
-                  className={`flex h-8 w-8 items-center justify-center rounded-lg transition-colors ${
-                    isActive
-                      ? "bg-cyan-500/20 text-cyan-400 border border-cyan-500/30"
-                      : "bg-zinc-900/80 text-zinc-500 group-hover:bg-zinc-800 group-hover:text-zinc-300"
-                  }`}
+                  className={`flex h-8 w-8 items-center justify-center rounded-lg transition-colors ${isActive
+                      ? "bg-black text-white border border-black"
+                      : "bg-white text-zinc-500 group-hover:bg-zinc-100 group-hover:text-zinc-700"
+                    }`}
                 >
                   <Icon className="h-4 w-4" />
                 </div>
@@ -141,19 +130,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <div className="flex items-center gap-1.5">
                 {item.badge && (
                   <span
-                    className={`rounded-md px-1.5 py-0.5 text-[10px] font-mono font-medium ${
-                      item.badgeColor || "bg-zinc-800 text-zinc-400 border border-zinc-700"
-                    }`}
+                    className={`rounded-md px-1.5 py-0.5 text-[10px] font-mono font-medium ${item.badgeColor || "bg-zinc-100 text-zinc-500 border border-zinc-300"
+                      }`}
                   >
                     {item.badge}
                   </span>
                 )}
                 <ChevronRight
-                  className={`h-3.5 w-3.5 transition-transform ${
-                    isActive
-                      ? "text-cyan-400 translate-x-0.5"
+                  className={`h-3.5 w-3.5 transition-transform ${isActive
+                      ? "text-black translate-x-0.5"
                       : "text-zinc-600 opacity-0 group-hover:opacity-100"
-                  }`}
+                    }`}
                 />
               </div>
             </button>
@@ -162,22 +149,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
       </nav>
 
       {/* User Profile Snippet at Bottom */}
-      <div className="border-t border-zinc-800/80 p-4 bg-zinc-950/80">
-        <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-3 backdrop-blur-md">
+      <div className="border-t border-zinc-200 p-4 bg-zinc-50/80">
+        <div className="rounded-xl border border-zinc-200 bg-white p-3 backdrop-blur-md">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-zinc-800 border border-zinc-700 font-mono text-xs font-bold text-cyan-300">
-                042
-                <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 border-2 border-zinc-900"></span>
+              <div className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-zinc-100 border border-zinc-300 font-mono text-xs font-bold text-zinc-700">
+                {operator.id ? operator.id.replace("OP-", "").substring(0, 3) : "NEW"}
+                <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 border-2 border-white"></span>
               </div>
               <div className="truncate">
                 <div className="flex items-center gap-1.5">
-                  <span className="text-xs font-bold text-zinc-100">{operator.callsign}</span>
-                  <ShieldCheck className="h-3 w-3 text-cyan-400" />
+                  <span className="text-xs font-bold text-zinc-900">{operator.username}</span>
+                  <ShieldCheck className="h-3 w-3 text-black" />
                 </div>
-                <p className="truncate text-[10px] text-zinc-400">{operator.name}</p>
-                <p className="truncate text-[9px] text-cyan-400/90 font-medium">
-                  {operator.tier.split(" - ")[0]}
+                <p className="truncate text-[10px] text-zinc-500">{operator.name}</p>
+                <p className="truncate text-[9px] text-black font-medium">
+                  {operator.badge}
                 </p>
               </div>
             </div>
@@ -185,7 +172,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <button
               onClick={onLogout}
               title="Sign Out / Switch Operator"
-              className="flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900 text-zinc-400 transition-colors hover:border-rose-500/30 hover:bg-rose-950/30 hover:text-rose-400"
+              className="flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-200 bg-white text-zinc-500 transition-colors hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600"
               aria-label="Sign out"
             >
               <LogOut className="h-3.5 w-3.5" />

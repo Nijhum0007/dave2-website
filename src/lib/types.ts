@@ -48,16 +48,17 @@ export interface EpisodeSubmission {
 
 export interface OperatorProfile {
   id: string;
-  callsign: string;
+  username: string;
   name: string;
   email: string;
-  role: string;
-  tier: string;
-  teleopRig: string;
-  cameras: string;
-  imuSensors: string;
-  s3Bucket: string;
-  assignedFleetManager: string;
+  phone: string;
+  badge: string;
+  payoutMethod: "Bank Transfer" | "PayPal" | "Instant Debit";
+  bankAccountLast4: string;
+  uploadOverWifiOnly: boolean;
+  saveOriginalVideo: boolean;
+  emailNotifications: boolean;
+  pushNotifications: boolean;
   approvedRate: number;
   totalEarnings: number;
   lastActive: string;

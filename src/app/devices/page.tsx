@@ -11,13 +11,13 @@ export default function DevicesPage() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
+
       if (currentScrollY > lastScrollY && currentScrollY > 80) {
         setIsVisible(false);
       } else {
         setIsVisible(true);
       }
-      
+
       setLastScrollY(currentScrollY);
     };
 
@@ -28,15 +28,14 @@ export default function DevicesPage() {
   return (
     <div className="min-h-screen bg-white text-zinc-900 font-sans selection:bg-cyan-500 selection:text-white overflow-x-hidden">
       {/* Navbar */}
-      <header 
-        className={`fixed top-0 left-0 right-0 z-50 bg-white border-b border-zinc-100 transition-transform duration-300 ${
-          isVisible ? "translate-y-0" : "-translate-y-full"
-        }`}
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 bg-white border-b border-zinc-100 transition-transform duration-300 ${isVisible ? "translate-y-0" : "-translate-y-full"
+          }`}
       >
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
           <div className="flex items-center gap-3">
             <Link href="/">
-              <img src="/logo.png" alt="Dave Logo" className="h-24 w-auto object-contain cursor-pointer" />
+              <img src="/logo.png" alt="Dave Logo" className="h-24 w-auto object-contain cursor-pointer invert" />
             </Link>
           </div>
 
@@ -50,9 +49,6 @@ export default function DevicesPage() {
             <Link href="/payouts" className="text-[15px] font-medium text-zinc-800 hover:text-black transition-colors">
               Payouts
             </Link>
-            <Link href="/#community" className="text-[15px] font-medium text-zinc-800 hover:text-black transition-colors">
-              Community
-            </Link>
           </nav>
 
           <div className="flex items-center gap-4">
@@ -63,7 +59,7 @@ export default function DevicesPage() {
               Log In
             </Link>
             <Link
-              href="/login"
+              href="/apply"
               className="inline-flex h-10 items-center justify-center rounded-md bg-black px-5 text-[15px] font-medium text-white transition-colors hover:bg-zinc-800"
             >
               Apply as Creator
@@ -77,13 +73,13 @@ export default function DevicesPage() {
         <section className="px-4 md:px-6">
           <div className="relative mx-auto max-w-[1400px] rounded-[1.5rem] overflow-hidden p-8 md:p-12 lg:p-16 flex flex-col justify-center min-h-[600px]">
             {/* Background Image */}
-            <div 
+            <div
               className="absolute inset-0 bg-cover bg-center bg-no-repeat"
               style={{ backgroundImage: 'url(/devices_nature_wide.png)' }}
             />
             {/* Overlay for text readability */}
             <div className="absolute inset-0 bg-black/40" />
-            
+
             <div className="relative z-10 w-full">
               <div className="text-center mb-16">
                 <h1 className="text-4xl md:text-5xl font-medium text-white text-balance mb-6">
@@ -93,7 +89,7 @@ export default function DevicesPage() {
                   To ensure high-quality data collection, all approved devices must meet these baseline specifications.
                 </p>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div className="bg-zinc-900/40 backdrop-blur-md border border-white/10 rounded-2xl p-8 text-center flex flex-col items-center shadow-xl">
                   <div className="h-16 w-16 bg-white/10 text-white rounded-full flex items-center justify-center mb-6 backdrop-blur-lg">
@@ -102,7 +98,7 @@ export default function DevicesPage() {
                   <h3 className="text-xl font-medium text-white mb-3">60 FPS Minimum</h3>
                   <p className="text-sm text-zinc-300">Prevents micro-movement data loss during fast actions.</p>
                 </div>
-                
+
                 <div className="bg-zinc-900/40 backdrop-blur-md border border-white/10 rounded-2xl p-8 text-center flex flex-col items-center shadow-xl">
                   <div className="h-16 w-16 bg-white/10 text-white rounded-full flex items-center justify-center mb-6 backdrop-blur-lg">
                     <MonitorPlay className="h-8 w-8" />
@@ -110,7 +106,7 @@ export default function DevicesPage() {
                   <h3 className="text-xl font-medium text-white mb-3">1080p Resolution</h3>
                   <p className="text-sm text-zinc-300">4K accepted and auto-downsampled for processing.</p>
                 </div>
-                
+
                 <div className="bg-zinc-900/40 backdrop-blur-md border border-white/10 rounded-2xl p-8 text-center flex flex-col items-center shadow-xl">
                   <div className="h-16 w-16 bg-white/10 text-white rounded-full flex items-center justify-center mb-6 backdrop-blur-lg">
                     <Activity className="h-8 w-8" />
@@ -118,7 +114,7 @@ export default function DevicesPage() {
                   <h3 className="text-xl font-medium text-white mb-3">Internal IMU</h3>
                   <p className="text-sm text-zinc-300">Hardware gyroscope and accelerometer required.</p>
                 </div>
-                
+
                 <div className="bg-zinc-900/40 backdrop-blur-md border border-white/10 rounded-2xl p-8 text-center flex flex-col items-center shadow-xl">
                   <div className="h-16 w-16 bg-white/10 text-white rounded-full flex items-center justify-center mb-6 backdrop-blur-lg">
                     <Focus className="h-8 w-8" />
@@ -142,7 +138,7 @@ export default function DevicesPage() {
                 Hardware Tiers
               </h2>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
               {/* Tier 1 */}
               <div>
@@ -161,7 +157,7 @@ export default function DevicesPage() {
                   <p className="text-sm text-zinc-600">Intel RealSense D435i/D455, OAK-D Pro</p>
                 </div>
               </div>
-              
+
               {/* Tier 2 */}
               <div>
                 <div className="aspect-[4/3] rounded-[1.5rem] overflow-hidden mb-6 bg-zinc-100 border border-zinc-200 relative shadow-sm">
@@ -179,7 +175,7 @@ export default function DevicesPage() {
                   <p className="text-sm text-zinc-600">Apple Vision Pro, Meta Quest 3, Meta Ray-Ban Glasses, iPhone 14/15/16 Pro (Requires custom sensor-logging app)</p>
                 </div>
               </div>
-              
+
               {/* Tier 3 */}
               <div>
                 <div className="aspect-[4/3] rounded-[1.5rem] overflow-hidden mb-6 bg-zinc-100 border border-zinc-200 relative shadow-sm">
@@ -344,7 +340,6 @@ export default function DevicesPage() {
               <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">About Us</Link>
               <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Careers</Link>
               <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Support Center</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Creator Community</Link>
             </div>
             <div className="flex flex-col gap-4">
               <h4 className="text-[11px] font-mono uppercase tracking-widest text-zinc-500 mb-2">Legal</h4>
@@ -358,7 +353,7 @@ export default function DevicesPage() {
           {/* Huge Statement */}
           <div className="mb-24 md:mb-40">
             <h1 className="text-[11vw] leading-[0.95] font-medium tracking-tight text-white mb-4">
-              Real-world data<br/>collected by<br/>everyday people.
+              Real-world data<br />collected by<br />everyday people.
             </h1>
           </div>
 
@@ -366,10 +361,10 @@ export default function DevicesPage() {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 border-t border-zinc-800 pt-8">
             <div className="flex gap-3">
               <a href="#" className="flex h-11 w-11 items-center justify-center rounded-md bg-[#1a1a1a] text-zinc-400 hover:bg-zinc-800 hover:text-white transition-colors">
-                 <span className="font-bold font-sans text-sm">in</span>
+                <span className="font-bold font-sans text-sm">in</span>
               </a>
               <a href="#" className="flex h-11 w-11 items-center justify-center rounded-md bg-[#1a1a1a] text-zinc-400 hover:bg-zinc-800 hover:text-white transition-colors">
-                 <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.008 5.936H5.045z"></path></svg>
+                <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.008 5.936H5.045z"></path></svg>
               </a>
             </div>
             <div className="flex flex-col md:text-right gap-3">

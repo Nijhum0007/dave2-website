@@ -32,7 +32,7 @@ export default function GuidelinesPage() {
       >
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
           <Link href="/" className="flex items-center gap-3">
-            <img src="/logo.png" alt="Dave Logo" className="h-24 w-auto object-contain" />
+            <img src="/logo.png" alt="Dave Logo" className="h-24 w-auto object-contain invert" />
           </Link>
 
           <nav className="hidden md:flex gap-8">
@@ -45,9 +45,6 @@ export default function GuidelinesPage() {
             <Link href="/#payouts" className="text-[15px] font-medium text-zinc-800 hover:text-black transition-colors">
               Payouts
             </Link>
-            <Link href="/#community" className="text-[15px] font-medium text-zinc-800 hover:text-black transition-colors">
-              Community
-            </Link>
           </nav>
 
           <div className="flex items-center gap-4">
@@ -58,7 +55,7 @@ export default function GuidelinesPage() {
               Log In
             </Link>
             <Link
-              href="/login"
+              href="/apply"
               className="inline-flex h-10 items-center justify-center rounded-md bg-black px-5 text-[15px] font-medium text-white transition-colors hover:bg-zinc-800"
             >
               Apply as Creator
@@ -188,6 +185,62 @@ export default function GuidelinesPage() {
           </div>
         </section>
 
+        {/* How to Record and Get Paid */}
+        <section className="py-24 lg:py-32 px-6 lg:px-8 bg-white border-t border-zinc-100">
+          <div className="mx-auto max-w-7xl">
+            <div className="text-center mb-16 lg:mb-24">
+              <h2 className="text-3xl md:text-5xl font-medium text-black text-balance mb-6">
+                How to Record and Get Paid
+              </h2>
+              <p className="text-lg text-zinc-600 max-w-2xl mx-auto">
+                We pay you to record simple, everyday tasks from your Point-of-View (POV). Follow these steps to ensure your video gets approved.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
+              {/* Step 1 */}
+              <div className="flex flex-col">
+                <div className="w-full aspect-[4/3] rounded-3xl overflow-hidden mb-6">
+                  <img src="/correct_rigid_mount.png" alt="Hands Free POV" className="w-full h-full object-cover" />
+                </div>
+                <h3 className="text-xl font-semibold text-black mb-3">1. Hands Free (POV Only)</h3>
+                <p className="text-zinc-500 text-[15px] leading-relaxed">
+                  We need to see exactly what you see. You cannot hold the phone in your hand. You must use a chest mount, head mount, or neck lanyard so both hands are visible.
+                </p>
+              </div>
+
+              {/* Step 2 */}
+              <div className="flex flex-col">
+                <div className="w-full aspect-[4/3] rounded-3xl overflow-hidden mb-6">
+                  <img src="/payout_everyday.png" alt="Choose Payout Tier" className="w-full h-full object-cover" />
+                </div>
+                <h3 className="text-xl font-semibold text-black mb-3">2. Choose Payout Tier</h3>
+                <div>
+                  <p className="text-zinc-500 text-[15px] leading-relaxed mb-4">
+                    <strong className="text-black">Standard (Tier 3):</strong> Record an <code className="text-xs font-mono bg-zinc-100 px-1.5 py-0.5 rounded text-zinc-800 border border-zinc-200">.mp4</code> video with any smartphone.
+                  </p>
+                  <p className="text-zinc-500 text-[15px] leading-relaxed">
+                    <strong className="text-black">Premium (Tier 2):</strong> Use an iPhone Pro. Record using <strong>Record3D</strong> or <strong>Stray Scanner</strong> for premium rates!
+                  </p>
+                </div>
+              </div>
+
+              {/* Step 3 */}
+              <div className="flex flex-col">
+                <div className="w-full aspect-[4/3] rounded-3xl overflow-hidden mb-6">
+                  <img src="/upload_guidelines.png" alt="How to Submit" className="w-full h-full object-cover" />
+                </div>
+                <h3 className="text-xl font-semibold text-black mb-3">3. How to Submit</h3>
+                <ul className="text-zinc-500 text-[15px] leading-relaxed list-disc pl-5 space-y-2">
+                  <li>Upload the file to your own <strong>Google Drive</strong>.</li>
+                  <li>Change access to <strong>"Anyone with the link"</strong>.</li>
+                  <li>Paste the link in our Bounty Dashboard!</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Supported Hardware Tiers */}
         <section className="py-24 lg:py-32 px-6 lg:px-8 bg-zinc-50 border-t border-zinc-100">
           <div className="mx-auto max-w-7xl">
@@ -214,6 +267,28 @@ export default function GuidelinesPage() {
                   <p className="text-lg text-zinc-600 mb-6 leading-relaxed">
                     Devices like <strong className="text-black font-semibold">Intel RealSense</strong> and <strong className="text-black font-semibold">OAK-D Pro</strong> provide unparalleled depth and spatial data. Data from these devices is highly sought after by top-tier robotics labs.
                   </p>
+                  <div className="mb-8 space-y-4 bg-zinc-50 p-6 rounded-2xl border border-zinc-100">
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 text-[15px]">
+                      <span className="font-semibold text-black sm:min-w-[140px] shrink-0">Target Audience:</span>
+                      <span className="text-zinc-600">Robotics students, labs, and professionals.</span>
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 text-[15px] items-start">
+                      <span className="font-semibold text-black sm:min-w-[140px] shrink-0 mt-1">Format Accepted:</span>
+                      <div className="flex gap-2 flex-wrap">
+                        <span className="font-mono text-xs font-medium bg-white border border-zinc-200 px-2 py-1 rounded-md text-zinc-700 shadow-sm">.bag (ROS/ROS2)</span>
+                        <span className="font-mono text-xs font-medium bg-white border border-zinc-200 px-2 py-1 rounded-md text-zinc-700 shadow-sm">.mcap</span>
+                      </div>
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 text-[15px]">
+                      <span className="font-semibold text-black sm:min-w-[140px] shrink-0 mt-0.5">Workflow:</span>
+                      <ol className="list-decimal pl-4 text-zinc-600 space-y-1.5 marker:text-zinc-400 marker:font-medium">
+                        <li>Mount the depth camera to a chest harness or head mount.</li>
+                        <li>Use ROS terminal commands to record RGB & Depth topics.</li>
+                        <li>Transfer the file to Google Drive.</li>
+                        <li>Generate a shareable link and submit.</li>
+                      </ol>
+                    </div>
+                  </div>
                   <ul className="space-y-4 mb-8">
                     <li className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-cyan-600 shrink-0 mt-0.5" />
@@ -231,7 +306,7 @@ export default function GuidelinesPage() {
                 </div>
                 <div className="order-1 lg:order-2">
                   <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl relative">
-                    <img src="/hardware_enterprise.png" alt="Enterprise RGB-D Camera" className="object-cover w-full h-full" />
+                    <img src="/tier1_enterprise_in_use.jpg" alt="Robotics engineer wearing chest-mounted depth camera" className="object-cover w-full h-full" />
                     <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-3xl" />
                   </div>
                 </div>
@@ -241,7 +316,7 @@ export default function GuidelinesPage() {
               <div className="grid lg:grid-cols-2 gap-12 items-center">
                 <div className="order-1 lg:order-1">
                   <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl relative">
-                    <img src="/hardware_consumer.png" alt="Consumer AR Glasses" className="object-cover w-full h-full" />
+                    <img src="/tier2_consumer_in_use.jpg" alt="Person wearing chest-mounted iPhone Pro while cooking" className="object-cover w-full h-full" />
                     <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-3xl" />
                   </div>
                 </div>
@@ -253,6 +328,28 @@ export default function GuidelinesPage() {
                   <p className="text-lg text-zinc-600 mb-6 leading-relaxed">
                     Utilize the power of modern consumer tech like <strong className="text-black font-semibold">Apple Vision Pro, Meta Glasses, or high-end iPhones</strong> (with LiDAR). Perfect for capturing vast amounts of varied, everyday data.
                   </p>
+                  <div className="mb-8 space-y-4 bg-zinc-50 p-6 rounded-2xl border border-zinc-100">
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 text-[15px]">
+                      <span className="font-semibold text-black sm:min-w-[140px] shrink-0">Target Audience:</span>
+                      <span className="text-zinc-600">Everyday users who own an iPhone Pro or iPad Pro.</span>
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 text-[15px] items-start">
+                      <span className="font-semibold text-black sm:min-w-[140px] shrink-0 mt-1">Format Accepted:</span>
+                      <div className="flex gap-2 flex-wrap">
+                        <span className="font-mono text-xs font-medium bg-white border border-zinc-200 px-2 py-1 rounded-md text-zinc-700 shadow-sm">.r3d (Record3D)</span>
+                        <span className="font-mono text-xs font-medium bg-white border border-zinc-200 px-2 py-1 rounded-md text-zinc-700 shadow-sm">.zip (Stray Scanner)</span>
+                      </div>
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 text-[15px]">
+                      <span className="font-semibold text-black sm:min-w-[140px] shrink-0 mt-0.5">Workflow:</span>
+                      <ol className="list-decimal pl-4 text-zinc-600 space-y-1.5 marker:text-zinc-400 marker:font-medium">
+                        <li>Download Record3D or Stray Scanner from the App Store.</li>
+                        <li>Strap the phone to your chest (GoPro mount).</li>
+                        <li>Hit record, perform the physical task, and hit stop.</li>
+                        <li>Upload to Google Drive app and submit link.</li>
+                      </ol>
+                    </div>
+                  </div>
                   <ul className="space-y-4 mb-8">
                     <li className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
@@ -274,12 +371,33 @@ export default function GuidelinesPage() {
               <div className="grid lg:grid-cols-2 gap-12 items-center">
                 <div className="order-2 lg:order-1">
                   <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-zinc-200 bg-transparent text-black text-xs font-bold uppercase tracking-wider mb-6">
-                    <Camera className="h-4 w-4" /> Tier 3: Baseline Access
+                    <Camera className="h-4 w-4" /> Tier 3: Standard Access
                   </div>
-                  <h3 className="text-3xl md:text-4xl font-medium text-black mb-4">Action Cameras</h3>
+                  <h3 className="text-3xl md:text-4xl font-medium text-black mb-4">Standard Video</h3>
                   <p className="text-lg text-zinc-600 mb-6 leading-relaxed">
-                    Rugged and reliable. Cameras like <strong className="text-black font-semibold">GoPro</strong> and <strong className="text-black font-semibold">DJI Osmo</strong> are excellent starting points for outdoor tasks or rigorous physical activities.
+                    Highly accessible. <strong className="text-black font-semibold">Any modern Android, iPhone, or Action Cameras (GoPro)</strong> are excellent starting points for everyday tasks or physical activities.
                   </p>
+                  <div className="mb-8 space-y-4 bg-zinc-50 p-6 rounded-2xl border border-zinc-100">
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 text-[15px]">
+                      <span className="font-semibold text-black sm:min-w-[140px] shrink-0">Target Audience:</span>
+                      <span className="text-zinc-600">Anyone with a smartphone or action camera.</span>
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 text-[15px] items-start">
+                      <span className="font-semibold text-black sm:min-w-[140px] shrink-0 mt-1">Format Accepted:</span>
+                      <div className="flex gap-2 flex-wrap">
+                        <span className="font-mono text-xs font-medium bg-white border border-zinc-200 px-2 py-1 rounded-md text-zinc-700 shadow-sm">.mp4</span>
+                      </div>
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 text-[15px]">
+                      <span className="font-semibold text-black sm:min-w-[140px] shrink-0 mt-0.5">Workflow:</span>
+                      <ol className="list-decimal pl-4 text-zinc-600 space-y-1.5 marker:text-zinc-400 marker:font-medium">
+                        <li>Open the standard camera app on the phone.</li>
+                        <li>Mount the phone to your chest or head.</li>
+                        <li>Record the task at 30 or 60 FPS.</li>
+                        <li>Upload the .mp4 to Google Drive and submit link.</li>
+                      </ol>
+                    </div>
+                  </div>
                   <ul className="space-y-4 mb-8">
                     <li className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
@@ -297,7 +415,7 @@ export default function GuidelinesPage() {
                 </div>
                 <div className="order-1 lg:order-2">
                   <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl relative">
-                    <img src="/hardware_action.png" alt="Action Camera" className="object-cover w-full h-full" />
+                    <img src="/tier3_action_in_use.jpg" alt="Cyclist wearing chest-mounted GoPro action camera" className="object-cover w-full h-full" />
                     <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-3xl" />
                   </div>
                 </div>
@@ -330,7 +448,6 @@ export default function GuidelinesPage() {
               <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">About Us</Link>
               <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Careers</Link>
               <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Support Center</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Creator Community</Link>
             </div>
             <div className="flex flex-col gap-4">
               <h4 className="text-[11px] font-mono uppercase tracking-widest text-zinc-500 mb-2">Legal</h4>

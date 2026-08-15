@@ -70,53 +70,40 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, onNavigateToUpload })
   const unreadCount = notifications.filter((n) => !n.read).length;
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-zinc-800/80 bg-zinc-950/80 px-6 backdrop-blur-xl">
+    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-zinc-200 bg-zinc-50/80 px-6 backdrop-blur-xl">
       {/* Left: Active View Breadcrumb & Rig Telemetry */}
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
           <span className="text-xs font-semibold tracking-wider text-zinc-500 uppercase">
-            Fleet Portal
+            Creator Dashboard
           </span>
           <span className="text-zinc-600">/</span>
-          <span className="text-sm font-medium text-zinc-100 capitalize">
+          <span className="text-sm font-medium text-zinc-900 capitalize">
             {activeTab.replace("-", " ")}
           </span>
         </div>
 
-        {/* Live Rig Status Pill */}
-        <div className="hidden items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-950/30 px-3 py-1 text-xs text-emerald-400 lg:flex shadow-[0_0_12px_rgba(16,185,129,0.15)]">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
-          </span>
-          <span className="font-mono font-medium tracking-tight">
-            RIG-042 • TELEOP ONLINE (3.8ms)
-          </span>
-        </div>
+
       </div>
 
       {/* Right: Telemetry, Clock, Quick Ingest & Notifications */}
       <div className="flex items-center gap-3">
         {/* UTC Clock */}
-        <div className="hidden items-center gap-1.5 rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-1.5 font-mono text-xs text-zinc-400 md:flex">
-          <Radio className="h-3.5 w-3.5 text-cyan-400 animate-pulse" />
+        <div className="hidden items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-3 py-1.5 font-mono text-xs text-zinc-500 md:flex">
+          <Radio className="h-3.5 w-3.5 text-black animate-pulse" />
           <span>{currentTime || "00:00:00 UTC"}</span>
         </div>
 
-        {/* S3 Link status */}
-        <div className="hidden items-center gap-1.5 rounded-lg border border-zinc-800/80 bg-zinc-900/40 px-3 py-1.5 text-xs text-zinc-400 xl:flex">
-          <Server className="h-3.5 w-3.5 text-zinc-500" />
-          <span className="font-mono text-[11px] text-zinc-400">AWS us-east-1 S3</span>
-        </div>
 
-        {/* Ingest CTA */}
+
+        {/* Submit Video CTA */}
         {activeTab !== "upload" && (
           <button
             onClick={onNavigateToUpload}
-            className="flex items-center gap-2 rounded-lg border border-cyan-500/40 bg-cyan-950/40 px-3.5 py-1.5 text-xs font-semibold text-cyan-300 transition-all hover:bg-cyan-900/50 hover:border-cyan-400 hover:shadow-[0_0_15px_rgba(0,240,255,0.25)] active:scale-95"
+            className="flex items-center gap-2 rounded-lg border border-black bg-black px-3.5 py-1.5 text-xs font-semibold text-white transition-all hover:bg-zinc-800 active:scale-95"
           >
-            <Sparkles className="h-3.5 w-3.5 text-cyan-400" />
-            <span>Ingest Episode</span>
+            <Sparkles className="h-3.5 w-3.5 text-white" />
+            <span>Submit Video</span>
           </button>
         )}
 
@@ -124,29 +111,29 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, onNavigateToUpload })
         <div className="relative">
           <button
             onClick={() => setShowNotifications(!showNotifications)}
-            className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900/80 text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-zinc-200"
+            className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-200 bg-white text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800"
             aria-label="Notifications"
           >
             <Bell className="h-4 w-4" />
             {unreadCount > 0 && (
-              <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-cyan-500 text-[10px] font-bold text-zinc-950 shadow-[0_0_8px_rgba(0,240,255,0.8)]">
+              <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-black text-[10px] font-bold text-white">
                 {unreadCount}
               </span>
             )}
           </button>
 
           {showNotifications && (
-            <div className="absolute right-0 mt-2 w-80 rounded-xl border border-zinc-800 glass-dropdown p-4 shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-150">
-              <div className="flex items-center justify-between pb-3 border-b border-zinc-800">
+            <div className="absolute right-0 mt-2 w-80 rounded-xl border border-zinc-200 glass-dropdown p-4 shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-150">
+              <div className="flex items-center justify-between pb-3 border-b border-zinc-200">
                 <div className="flex items-center gap-2">
-                  <Activity className="h-4 w-4 text-cyan-400" />
-                  <h4 className="text-xs font-bold tracking-wider text-zinc-200 uppercase">
-                    Fleet Ingestion Alerts
+                  <Activity className="h-4 w-4 text-black" />
+                  <h4 className="text-xs font-bold tracking-wider text-zinc-800 uppercase">
+                    Recent Notifications
                   </h4>
                 </div>
                 <button
                   onClick={() => setShowNotifications(false)}
-                  className="text-zinc-500 hover:text-zinc-300"
+                  className="text-zinc-500 hover:text-zinc-700"
                 >
                   <X className="h-3.5 w-3.5" />
                 </button>
@@ -158,17 +145,17 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, onNavigateToUpload })
                     key={n.id}
                     className={`rounded-lg border p-2.5 text-xs transition-colors ${
                       n.type === "success"
-                        ? "border-emerald-500/20 bg-emerald-950/20"
+                        ? "border-emerald-200 bg-emerald-50"
                         : n.type === "warning"
-                        ? "border-amber-500/20 bg-amber-950/20"
-                        : "border-rose-500/20 bg-rose-950/20"
+                        ? "border-amber-200 bg-amber-50"
+                        : "border-rose-200 bg-rose-50"
                     }`}
                   >
                     <div className="flex items-start justify-between">
-                      <p className="font-semibold text-zinc-200">{n.title}</p>
+                      <p className="font-semibold text-zinc-800">{n.title}</p>
                       <span className="text-[10px] text-zinc-500 font-mono">{n.time}</span>
                     </div>
-                    <p className="mt-1 text-[11px] text-zinc-400 leading-relaxed">{n.desc}</p>
+                    <p className="mt-1 text-[11px] text-zinc-500 leading-relaxed">{n.desc}</p>
                   </div>
                 ))}
               </div>
@@ -178,7 +165,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, onNavigateToUpload })
                   setNotifications(notifications.map((n) => ({ ...n, read: true })));
                   setShowNotifications(false);
                 }}
-                className="mt-3 w-full rounded-md border border-zinc-800 bg-zinc-900/60 py-1.5 text-center text-xs font-medium text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200"
+                className="mt-3 w-full rounded-md border border-zinc-200 bg-white py-1.5 text-center text-xs font-medium text-zinc-500 hover:bg-zinc-100 hover:text-zinc-800"
               >
                 Mark all as acknowledged
               </button>

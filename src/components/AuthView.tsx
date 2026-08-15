@@ -10,50 +10,70 @@ import {
   AlertCircle,
   Fingerprint,
   ArrowRight,
+  ArrowLeft,
   User,
 } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface AuthViewProps {
   onLoginSuccess: (email: string) => void;
 }
 
 export const AuthView: React.FC<AuthViewProps> = ({ onLoginSuccess }) => {
-  const [isLogin, setIsLogin] = useState(true);
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [callsign, setCallsign] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [useHardwareKey, setUseHardwareKey] = useState(true);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password || (!isLogin && !callsign)) {
+    if (!email || !password) {
       setError("Please provide all required credentials.");
       return;
     }
     setError(null);
     setIsLoading(true);
 
-    // Simulate Supabase authentication & Rig token validation
-    setTimeout(() => {
-      setIsLoading(false);
+    // Use Supabase client for real authentication
+    const { createClient } = await import("@/lib/supabase/client");
+    const supabase = createClient();
+    
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    setIsLoading(false);
+
+    if (signInError) {
+      setError(signInError.message);
+    } else {
       onLoginSuccess(email);
-    }, 900);
+    }
   };
 
   const handleQuickDemoFill = () => {
-    setIsLogin(true);
     setEmail("creator_042@dave.com");
     setPassword("PhysicalAI_Teleop_2026!");
     setError(null);
   };
 
   return (
-    <div className="relative min-h-screen w-full flex items-center justify-center bg-zinc-950 bg-grid-pattern px-4 py-12">
-      {/* Ambient background glow effects */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 h-96 w-96 rounded-full bg-cyan-500/10 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-10 right-1/4 h-80 w-80 rounded-full bg-emerald-500/5 blur-[100px] pointer-events-none" />
+    <div className="relative min-h-screen w-full flex items-center justify-center bg-zinc-50 bg-grid-pattern px-4 py-12">
+      {/* Back Button to Home */}
+      <div className="absolute top-6 left-6 sm:top-10 sm:left-10 z-10">
+        <button 
+          type="button"
+          onClick={() => router.back()}
+          className="group flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-white border border-zinc-200 text-zinc-600 shadow-sm transition-all hover:bg-zinc-50 hover:text-black hover:shadow-md hover:scale-105 active:scale-95"
+          title="Return to previous page"
+        >
+          <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 transition-transform group-hover:-translate-x-0.5" />
+        </button>
+      </div>
 
       {/* Main Gated Access Card */}
       <div className="relative w-full max-w-md">
@@ -62,25 +82,23 @@ export const AuthView: React.FC<AuthViewProps> = ({ onLoginSuccess }) => {
           <div className="flex items-center gap-2">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75"></span>
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-500"></span>
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-black"></span>
             </span>
-            <span className="font-mono text-[11px] font-semibold tracking-wider text-cyan-400 uppercase">
+            <span className="font-mono text-[11px] font-semibold tracking-wider text-black uppercase">
               Gated Ingestion Gateway • v2.4
             </span>
           </div>
           <span className="font-mono text-[10px] text-zinc-500">SEC-LEVEL-3</span>
         </div>
 
-        <div className="rounded-3xl border border-zinc-800/80 bg-zinc-900/50 p-8 shadow-2xl backdrop-blur-2xl">
+        <div className="rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm backdrop-blur-2xl">
           {/* Header Brand */}
           <div className="text-center mb-8 flex flex-col items-center">
             <div className="mx-auto mb-4 flex justify-center">
               <img src="/logo.png" alt="Dave Logo" className="h-16 w-auto object-contain invert" />
             </div>
-            <p className="mt-1 text-xs text-zinc-400">
-              {isLogin
-                ? "Physical AI Data Collection Portal"
-                : "Apply for Operator Network Access"}
+            <p className="mt-1 text-xs text-zinc-500">
+              Physical AI Data Collection Portal
             </p>
           </div>
 
@@ -91,31 +109,9 @@ export const AuthView: React.FC<AuthViewProps> = ({ onLoginSuccess }) => {
             </div>
           )}
 
-          {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
-            {!isLogin && (
-              <div className="animate-in fade-in slide-in-from-top-2 duration-300">
-                <label className="block text-xs font-semibold text-zinc-300 mb-1.5 uppercase tracking-wider">
-                  Operator Callsign
-                </label>
-                <div className="relative">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-zinc-500">
-                    <User className="h-4 w-4" />
-                  </div>
-                  <input
-                    type="text"
-                    value={callsign}
-                    onChange={(e) => setCallsign(e.target.value)}
-                    placeholder="e.g. OP-GHOST-99"
-                    required={!isLogin}
-                    className="w-full rounded-xl border border-zinc-800 bg-zinc-900/80 py-2.5 pl-10 pr-4 text-xs font-mono text-zinc-100 placeholder-zinc-600 transition-all focus:border-cyan-500 focus:bg-zinc-900 focus:ring-2 focus:ring-cyan-500/20 focus:outline-none"
-                  />
-                </div>
-              </div>
-            )}
-
             <div>
-              <label className="block text-xs font-semibold text-zinc-300 mb-1.5 uppercase tracking-wider">
+              <label className="block text-xs font-semibold text-zinc-700 mb-1.5 uppercase tracking-wider">
                 Creator Email
               </label>
               <div className="relative">
@@ -128,14 +124,14 @@ export const AuthView: React.FC<AuthViewProps> = ({ onLoginSuccess }) => {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="creator_042@dave.com"
                   required
-                  className="w-full rounded-xl border border-zinc-800 bg-zinc-900/80 py-2.5 pl-10 pr-4 text-xs font-mono text-zinc-100 placeholder-zinc-600 transition-all focus:border-cyan-500 focus:bg-zinc-900 focus:ring-2 focus:ring-cyan-500/20 focus:outline-none"
+                  className="w-full rounded-xl border border-zinc-200 bg-white py-2.5 pl-10 pr-4 text-xs font-mono text-zinc-900 placeholder-zinc-600 transition-all focus:border-black focus:bg-white focus:ring-2 focus:ring-black focus:outline-none"
                 />
               </div>
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-xs font-semibold text-zinc-300 uppercase tracking-wider">
+                <label className="block text-xs font-semibold text-zinc-700 uppercase tracking-wider">
                   Access Key / Password
                 </label>
                 <span className="font-mono text-[10px] text-zinc-500">
@@ -152,16 +148,16 @@ export const AuthView: React.FC<AuthViewProps> = ({ onLoginSuccess }) => {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••••••"
                   required
-                  className="w-full rounded-xl border border-zinc-800 bg-zinc-900/80 py-2.5 pl-10 pr-4 text-xs font-mono text-zinc-100 placeholder-zinc-600 transition-all focus:border-cyan-500 focus:bg-zinc-900 focus:ring-2 focus:ring-cyan-500/20 focus:outline-none"
+                  className="w-full rounded-xl border border-zinc-200 bg-white py-2.5 pl-10 pr-4 text-xs font-mono text-zinc-900 placeholder-zinc-600 transition-all focus:border-black focus:bg-white focus:ring-2 focus:ring-black focus:outline-none"
                 />
               </div>
             </div>
 
             {/* Hardware Key Checkbox */}
-            <div className="flex items-center justify-between rounded-lg border border-zinc-800/80 bg-zinc-900/40 p-2.5 text-xs">
+            <div className="flex items-center justify-between rounded-lg border border-zinc-200 bg-white p-2.5 text-xs">
               <div className="flex items-center gap-2">
                 <Fingerprint className="h-4 w-4 text-emerald-400" />
-                <span className="text-zinc-300 font-medium">
+                <span className="text-zinc-700 font-medium">
                   Telemetry Rig Key (RIG-042)
                 </span>
               </div>
@@ -169,7 +165,7 @@ export const AuthView: React.FC<AuthViewProps> = ({ onLoginSuccess }) => {
                 type="checkbox"
                 checked={useHardwareKey}
                 onChange={(e) => setUseHardwareKey(e.target.checked)}
-                className="h-4 w-4 rounded border-zinc-700 bg-zinc-800 text-cyan-500 focus:ring-cyan-500 focus:ring-offset-zinc-900"
+                className="h-4 w-4 rounded border-zinc-300 bg-zinc-100 text-black focus:ring-black focus:ring-offset-white"
               />
             </div>
 
@@ -177,7 +173,7 @@ export const AuthView: React.FC<AuthViewProps> = ({ onLoginSuccess }) => {
             <button
               type="submit"
               disabled={isLoading}
-              className="group relative flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 py-3 text-xs font-bold uppercase tracking-wider text-zinc-950 transition-all hover:shadow-[0_0_25px_rgba(0,240,255,0.4)] active:scale-[0.98] disabled:opacity-50"
+              className="group relative flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-zinc-900 to-black py-3 text-xs font-bold uppercase tracking-wider text-white transition-all hover:shadow-lg active:scale-[0.98] disabled:opacity-50"
             >
               {isLoading ? (
                 <>
@@ -186,40 +182,23 @@ export const AuthView: React.FC<AuthViewProps> = ({ onLoginSuccess }) => {
                 </>
               ) : (
                 <>
-                  <span>{isLogin ? "Authenticate Operator" : "Apply for Access"}</span>
+                  <span>Authenticate Operator</span>
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </>
               )}
             </button>
           </form>
 
-          {/* Toggle Login/Signup */}
-          <div className="mt-6 border-t border-zinc-800/80 pt-4 text-center">
+          {/* Quick Demo Pre-fill */}
+          <div className="mt-4 flex items-center justify-center">
             <button
-              onClick={() => {
-                setIsLogin(!isLogin);
-                setError(null);
-              }}
-              className="text-[11px] font-medium text-zinc-400 hover:text-cyan-400 transition-colors"
+              type="button"
+              onClick={handleQuickDemoFill}
+              className="text-[11px] font-mono text-black hover:text-zinc-700 underline underline-offset-4"
             >
-              {isLogin
-                ? "Not in the network? Apply for Operator Access"
-                : "Already an Operator? Log In Here"}
+              ⚡ Auto-fill Demo Credentials (Operator 042)
             </button>
           </div>
-
-          {/* Quick Demo Pre-fill */}
-          {isLogin && (
-            <div className="mt-4 flex items-center justify-center">
-              <button
-                type="button"
-                onClick={handleQuickDemoFill}
-                className="text-[11px] font-mono text-cyan-400/80 hover:text-cyan-300 underline underline-offset-4"
-              >
-                ⚡ Auto-fill Demo Credentials (Operator 042)
-              </button>
-            </div>
-          )}
         </div>
 
         {/* Bottom Footer Info */}

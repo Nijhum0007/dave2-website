@@ -30,13 +30,13 @@ export default function LandingPage() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
+
       if (currentScrollY > lastScrollY && currentScrollY > 80) {
         setIsVisible(false);
       } else {
         setIsVisible(true);
       }
-      
+
       setLastScrollY(currentScrollY);
     };
 
@@ -47,14 +47,13 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white text-zinc-900 font-sans selection:bg-cyan-500 selection:text-white overflow-x-hidden">
       {/* Navbar */}
-      <header 
-        className={`fixed top-0 left-0 right-0 z-50 bg-white border-b border-zinc-100 transition-transform duration-300 ${
-          isVisible ? "translate-y-0" : "-translate-y-full"
-        }`}
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 bg-white border-b border-zinc-100 transition-transform duration-300 ${isVisible ? "translate-y-0" : "-translate-y-full"
+          }`}
       >
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
           <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="Dave Logo" className="h-24 w-auto object-contain" />
+            <img src="/logo.png" alt="Dave Logo" className="h-24 w-auto object-contain invert" />
           </div>
 
           <nav className="hidden md:flex gap-8">
@@ -67,9 +66,6 @@ export default function LandingPage() {
             <Link href="/payouts" className="text-[15px] font-medium text-zinc-800 hover:text-black transition-colors">
               Payouts
             </Link>
-            <Link href="#community" className="text-[15px] font-medium text-zinc-800 hover:text-black transition-colors">
-              Community
-            </Link>
           </nav>
 
           <div className="flex items-center gap-4">
@@ -80,7 +76,7 @@ export default function LandingPage() {
               Log In
             </Link>
             <Link
-              href="/login"
+              href="/apply"
               className="inline-flex h-10 items-center justify-center rounded-md bg-black px-5 text-[15px] font-medium text-white transition-colors hover:bg-zinc-800"
             >
               Apply as Creator
@@ -94,7 +90,7 @@ export default function LandingPage() {
         <section className="px-4 md:px-6">
           <div className="relative mx-auto max-w-[1400px] h-[700px] rounded-[1.5rem] overflow-hidden flex items-end p-8 md:p-16">
             {/* Background Image */}
-            <div 
+            <div
               className="absolute inset-0 bg-zinc-900 bg-cover bg-center"
               style={{ backgroundImage: 'url(/hero-bg-gig.png)' }}
             />
@@ -109,9 +105,9 @@ export default function LandingPage() {
               <p className="text-xl md:text-2xl text-white/90 mb-10 max-w-2xl font-light">
                 Join thousands of people earning money by collecting everyday video data. Whether you're doing dishes, riding your bike, or walking the dog—strap on a camera and start earning today.
               </p>
-              
+
               <Link
-                href="/login"
+                href="/apply"
                 className="group relative inline-flex items-center rounded-lg bg-white p-1 pr-1.5 transition-transform hover:scale-[0.98]"
               >
                 <span className="pl-4 pr-3 text-[15px] font-medium text-black">
@@ -244,7 +240,7 @@ export default function LandingPage() {
                 </Link>
               </div>
             </div>
-            
+
             {/* Dashboard Video */}
             <div className="relative rounded-2xl border border-zinc-200 shadow-2xl overflow-hidden">
               <video
@@ -390,14 +386,13 @@ export default function LandingPage() {
                 </div>
                 <div className="flex flex-col gap-3">
                   {stories.map((story, idx) => (
-                    <button 
+                    <button
                       key={idx}
                       onClick={() => setActiveStoryIndex(idx)}
-                      className={`text-left px-5 py-4 rounded-xl font-medium text-sm transition-all border ${
-                        activeStoryIndex === idx 
-                          ? "bg-white text-[#12312b] border-transparent shadow-lg shadow-black/10" 
+                      className={`text-left px-5 py-4 rounded-xl font-medium text-sm transition-all border ${activeStoryIndex === idx
+                          ? "bg-white text-[#12312b] border-transparent shadow-lg shadow-black/10"
                           : "bg-white/5 text-white/60 hover:bg-white/10 border-white/10 hover:text-white"
-                      }`}
+                        }`}
                     >
                       {story.name}
                     </button>
@@ -406,8 +401,8 @@ export default function LandingPage() {
               </div>
               <div className="lg:col-span-9 lg:pl-16 flex flex-col justify-between h-full min-h-[350px]">
                 <div className="flex-1 flex items-start">
-                  <h2 
-                    key={activeStoryIndex} 
+                  <h2
+                    key={activeStoryIndex}
                     className="animate-fade-slide text-3xl md:text-4xl lg:text-[42px] font-medium text-white leading-[1.3] tracking-tight text-balance"
                   >
                     "{stories[activeStoryIndex].quote}"
@@ -415,24 +410,24 @@ export default function LandingPage() {
                 </div>
                 <div className="mt-8 flex items-end justify-between shrink-0">
                   <div className="flex gap-2">
-                     <button 
-                       onClick={() => setActiveStoryIndex((prev) => (prev > 0 ? prev - 1 : stories.length - 1))}
-                       className="h-11 w-11 rounded-lg border border-white/20 flex items-center justify-center text-white hover:bg-white/10 transition-colors text-lg"
-                     >
-                       {"<"}
-                     </button>
-                     <button 
-                       onClick={() => setActiveStoryIndex((prev) => (prev < stories.length - 1 ? prev + 1 : 0))}
-                       className="h-11 w-11 rounded-lg border border-white/20 flex items-center justify-center text-white hover:bg-white/10 transition-colors text-lg"
-                     >
-                       {">"}
-                     </button>
+                    <button
+                      onClick={() => setActiveStoryIndex((prev) => (prev > 0 ? prev - 1 : stories.length - 1))}
+                      className="h-11 w-11 rounded-lg border border-white/20 flex items-center justify-center text-white hover:bg-white/10 transition-colors text-lg"
+                    >
+                      {"<"}
+                    </button>
+                    <button
+                      onClick={() => setActiveStoryIndex((prev) => (prev < stories.length - 1 ? prev + 1 : 0))}
+                      className="h-11 w-11 rounded-lg border border-white/20 flex items-center justify-center text-white hover:bg-white/10 transition-colors text-lg"
+                    >
+                      {">"}
+                    </button>
                   </div>
                   <div key={`author-${activeStoryIndex}`} className="animate-fade-slide text-right">
-                     <div className="text-white font-medium text-lg">{stories[activeStoryIndex].name}</div>
-                     <div className="text-emerald-100/80 font-mono text-[10px] uppercase tracking-widest mt-1 bg-white/10 inline-block px-2 py-1 rounded">
-                       {stories[activeStoryIndex].title}
-                     </div>
+                    <div className="text-white font-medium text-lg">{stories[activeStoryIndex].name}</div>
+                    <div className="text-emerald-100/80 font-mono text-[10px] uppercase tracking-widest mt-1 bg-white/10 inline-block px-2 py-1 rounded">
+                      {stories[activeStoryIndex].title}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -465,7 +460,6 @@ export default function LandingPage() {
               <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">About Us</Link>
               <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Careers</Link>
               <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Support Center</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Creator Community</Link>
             </div>
             <div className="flex flex-col gap-4">
               <h4 className="text-[11px] font-mono uppercase tracking-widest text-zinc-500 mb-2">Legal</h4>
@@ -479,7 +473,7 @@ export default function LandingPage() {
           {/* Huge Statement */}
           <div className="mb-24 md:mb-40">
             <h1 className="text-[11vw] leading-[0.95] font-medium tracking-tight text-white mb-4">
-              Real-world data<br/>collected by<br/>everyday people.
+              Real-world data<br />collected by<br />everyday people.
             </h1>
           </div>
 
@@ -487,10 +481,10 @@ export default function LandingPage() {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 border-t border-zinc-800 pt-8">
             <div className="flex gap-3">
               <a href="#" className="flex h-11 w-11 items-center justify-center rounded-md bg-[#1a1a1a] text-zinc-400 hover:bg-zinc-800 hover:text-white transition-colors">
-                 <span className="font-bold font-sans text-sm">in</span>
+                <span className="font-bold font-sans text-sm">in</span>
               </a>
               <a href="#" className="flex h-11 w-11 items-center justify-center rounded-md bg-[#1a1a1a] text-zinc-400 hover:bg-zinc-800 hover:text-white transition-colors">
-                 <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.008 5.936H5.045z"></path></svg>
+                <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.008 5.936H5.045z"></path></svg>
               </a>
             </div>
             <div className="flex flex-col md:text-right gap-3">

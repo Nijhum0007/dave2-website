@@ -11,13 +11,13 @@ export default function PayoutsPage() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
+
       if (currentScrollY > lastScrollY && currentScrollY > 80) {
         setIsVisible(false);
       } else {
         setIsVisible(true);
       }
-      
+
       setLastScrollY(currentScrollY);
     };
 
@@ -28,15 +28,14 @@ export default function PayoutsPage() {
   return (
     <div className="min-h-screen bg-white text-zinc-900 font-sans selection:bg-cyan-500 selection:text-white overflow-x-hidden">
       {/* Navbar */}
-      <header 
-        className={`fixed top-0 left-0 right-0 z-50 bg-white border-b border-zinc-100 transition-transform duration-300 ${
-          isVisible ? "translate-y-0" : "-translate-y-full"
-        }`}
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 bg-white border-b border-zinc-100 transition-transform duration-300 ${isVisible ? "translate-y-0" : "-translate-y-full"
+          }`}
       >
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
           <div className="flex items-center gap-3">
             <Link href="/">
-              <img src="/logo.png" alt="Dave Logo" className="h-24 w-auto object-contain" />
+              <img src="/logo.png" alt="Dave Logo" className="h-24 w-auto object-contain invert" />
             </Link>
           </div>
 
@@ -50,9 +49,6 @@ export default function PayoutsPage() {
             <Link href="/payouts" className="text-[15px] font-medium text-zinc-800 hover:text-black transition-colors">
               Payouts
             </Link>
-            <Link href="/#community" className="text-[15px] font-medium text-zinc-800 hover:text-black transition-colors">
-              Community
-            </Link>
           </nav>
 
           <div className="flex items-center gap-4">
@@ -63,7 +59,7 @@ export default function PayoutsPage() {
               Log In
             </Link>
             <Link
-              href="/login"
+              href="/apply"
               className="inline-flex h-10 items-center justify-center rounded-md bg-black px-5 text-[15px] font-medium text-white transition-colors hover:bg-zinc-800"
             >
               Apply as Creator
@@ -88,9 +84,9 @@ export default function PayoutsPage() {
             {/* Card 1: Everyday Environments */}
             <div className="group rounded-3xl overflow-hidden border border-zinc-200 bg-zinc-50 hover:shadow-xl transition-all duration-300">
               <div className="relative aspect-[4/3] w-full overflow-hidden bg-zinc-900">
-                <img 
-                  src="/payout_everyday.png" 
-                  alt="Everyday household tasks" 
+                <img
+                  src="/payout_everyday.png"
+                  alt="Everyday household tasks"
                   className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
@@ -112,9 +108,9 @@ export default function PayoutsPage() {
             {/* Card 2: Specialized Industrial */}
             <div className="group rounded-3xl overflow-hidden border border-zinc-200 bg-zinc-50 hover:shadow-xl transition-all duration-300">
               <div className="relative aspect-[4/3] w-full overflow-hidden bg-zinc-900">
-                <img 
-                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80" 
-                  alt="Industrial machinery" 
+                <img
+                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80"
+                  alt="Industrial machinery"
                   className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
                 />
                 {/* Overlay Grid for tech feel */}
@@ -151,7 +147,7 @@ export default function PayoutsPage() {
                 Don't guess if your video is good enough. Our automated QA gives you instant feedback.
               </p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
               {/* Pass ✅ */}
               <div className="bg-white rounded-3xl p-4 shadow-sm border border-zinc-200 relative overflow-hidden group">
@@ -160,11 +156,11 @@ export default function PayoutsPage() {
                   <span className="text-sm font-medium text-emerald-800 truncate">[Status: Verified] + $0.15 Credited</span>
                 </div>
                 <div className="rounded-2xl overflow-hidden aspect-video relative bg-zinc-100">
-                   <img 
-                      src="https://images.unsplash.com/photo-1507206130118-b5907f817163?auto=format&fit=crop&w=800&q=80" 
-                      alt="Clear image grasp" 
-                      className="w-full h-full object-cover"
-                   />
+                  <img
+                    src="https://images.unsplash.com/photo-1507206130118-b5907f817163?auto=format&fit=crop&w=800&q=80"
+                    alt="Clear image grasp"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
               </div>
 
@@ -175,11 +171,11 @@ export default function PayoutsPage() {
                   <span className="text-sm font-medium text-rose-800 truncate">[Status: Rejected] QA_ERR_MOTION_BLUR</span>
                 </div>
                 <div className="rounded-2xl overflow-hidden aspect-video relative bg-zinc-100">
-                   <img 
-                      src="https://images.unsplash.com/photo-1507206130118-b5907f817163?auto=format&fit=crop&w=800&q=80" 
-                      alt="Blurry image grasp" 
-                      className="w-full h-full object-cover blur-[6px] brightness-[0.6] scale-110 -rotate-3"
-                   />
+                  <img
+                    src="https://images.unsplash.com/photo-1507206130118-b5907f817163?auto=format&fit=crop&w=800&q=80"
+                    alt="Blurry image grasp"
+                    className="w-full h-full object-cover blur-[6px] brightness-[0.6] scale-110 -rotate-3"
+                  />
                 </div>
               </div>
             </div>
@@ -198,7 +194,7 @@ export default function PayoutsPage() {
             {/* Column 1 */}
             <div className="text-center">
               <div className="w-20 h-20 mx-auto bg-zinc-50 border border-zinc-200 rounded-[1.25rem] flex items-center justify-center text-black mb-6 shadow-sm">
-                 <Wallet className="w-8 h-8" />
+                <Wallet className="w-8 h-8" />
               </div>
               <h3 className="text-xl font-medium text-black mb-4">Instant Ledger Updates</h3>
               <p className="text-zinc-600 leading-relaxed">
@@ -209,7 +205,7 @@ export default function PayoutsPage() {
             {/* Column 2 */}
             <div className="text-center">
               <div className="w-20 h-20 mx-auto bg-zinc-50 border border-zinc-200 rounded-[1.25rem] flex items-center justify-center text-black mb-6 shadow-sm">
-                 <LayoutGrid className="w-8 h-8" />
+                <LayoutGrid className="w-8 h-8" />
               </div>
               <h3 className="text-xl font-medium text-black mb-4">$10 Minimum Threshold</h3>
               <p className="text-zinc-600 leading-relaxed">
@@ -220,7 +216,7 @@ export default function PayoutsPage() {
             {/* Column 3 */}
             <div className="text-center">
               <div className="w-20 h-20 mx-auto bg-zinc-50 border border-zinc-200 rounded-[1.25rem] flex items-center justify-center text-black mb-6 shadow-sm">
-                 <Clock className="w-8 h-8" />
+                <Clock className="w-8 h-8" />
               </div>
               <h3 className="text-xl font-medium text-black mb-4">Weekly Friday Sweeps</h3>
               <p className="text-zinc-600 leading-relaxed">
@@ -236,7 +232,7 @@ export default function PayoutsPage() {
             <div className="absolute inset-0 bg-gradient-to-tr from-cyan-900/20 via-transparent to-emerald-900/20 pointer-events-none" />
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-500/10 blur-[120px] rounded-full"></div>
             <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-emerald-500/10 blur-[120px] rounded-full"></div>
-            
+
             <div className="grid md:grid-cols-2 gap-12 items-center relative z-10">
               <div className="order-2 md:order-1">
                 <div className="text-xs leading-6 tracking-[1px] mb-4 uppercase font-mono text-cyan-400">
@@ -248,7 +244,7 @@ export default function PayoutsPage() {
                 <p className="text-lg text-zinc-400 mb-8 leading-relaxed">
                   Maintain a 90% QA acceptance rate across 500+ videos to unlock permanent bounty multipliers and priority server processing.
                 </p>
-                
+
                 <ul className="space-y-4">
                   <li className="flex items-center gap-4 text-zinc-200 font-medium bg-white/5 p-4 rounded-xl border border-white/10">
                     <CheckCircle className="h-5 w-5 text-cyan-400 shrink-0" />
@@ -309,7 +305,6 @@ export default function PayoutsPage() {
               <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">About Us</Link>
               <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Careers</Link>
               <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Support Center</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Creator Community</Link>
             </div>
             <div className="flex flex-col gap-4">
               <h4 className="text-[11px] font-mono uppercase tracking-widest text-zinc-500 mb-2">Legal</h4>
@@ -323,7 +318,7 @@ export default function PayoutsPage() {
           {/* Huge Statement */}
           <div className="mb-24 md:mb-40">
             <h1 className="text-[11vw] leading-[0.95] font-medium tracking-tight text-white mb-4">
-              Real-world data<br/>collected by<br/>everyday people.
+              Real-world data<br />collected by<br />everyday people.
             </h1>
           </div>
 
@@ -331,10 +326,10 @@ export default function PayoutsPage() {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 border-t border-zinc-800 pt-8">
             <div className="flex gap-3">
               <a href="#" className="flex h-11 w-11 items-center justify-center rounded-md bg-[#1a1a1a] text-zinc-400 hover:bg-zinc-800 hover:text-white transition-colors">
-                 <span className="font-bold font-sans text-sm">in</span>
+                <span className="font-bold font-sans text-sm">in</span>
               </a>
               <a href="#" className="flex h-11 w-11 items-center justify-center rounded-md bg-[#1a1a1a] text-zinc-400 hover:bg-zinc-800 hover:text-white transition-colors">
-                 <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.008 5.936H5.045z"></path></svg>
+                <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.008 5.936H5.045z"></path></svg>
               </a>
             </div>
             <div className="flex flex-col md:text-right gap-3">
