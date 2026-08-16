@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Link2, Sparkles, CheckCircle2, Loader2, ArrowRight } from "lucide-react";
+import { Link2, Sparkles, CheckCircle2, Loader2 } from "lucide-react";
 import confetti from "canvas-confetti";
 import { Recipe, EpisodeSubmission } from "@/lib/types";
+import { createClient } from "@/lib/supabase/client";
 
 interface UploadZoneProps {
   recipes: Recipe[];
@@ -25,10 +26,10 @@ export const UploadZone: React.FC<UploadZoneProps> = ({
   const [notes, setNotes] = useState("");
   
   const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
-  const [createdEpisode, setCreatedEpisode] = useState<EpisodeSubmission | null>(null);
 
   useEffect(() => {
     if (initialRecipeId) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSelectedRecipeId(initialRecipeId);
     }
   }, [initialRecipeId]);
@@ -36,12 +37,47 @@ export const UploadZone: React.FC<UploadZoneProps> = ({
   const selectedRecipe = recipes.find((r) => r.id === selectedRecipeId) || recipes[0];
   const isValidLink = driveLink.trim().length > 5 && driveLink.includes("http");
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!isValidLink) return;
     setStatus("submitting");
 
-    // Simulate backend submission delay
-    setTimeout(() => {
+    try {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (!user) {
+        console.error("User not authenticated");
+        setStatus("idle");
+        return;
+      }
+
+      const submissionPayload = {
+        operator_id: user.id,
+        recipe_id: selectedRecipe.id,
+        recipe_title: selectedRecipe.title,
+        environment: selectedRecipe.environment,
+        duration_seconds: selectedRecipe.expectedDurationSec,
+        status: "PENDING",
+        qa_reviewer: "Pending QA Auto-Ingest",
+        qa_feedback: `Submitted via link. Creator notes: "${notes || "None"}". Waiting for QA team to download and process.`,
+        drive_link: driveLink,
+        rig_id: "Smartphone/Camera",
+        teleop_latency_ms: 0,
+      };
+
+      const { data, error } = await supabase
+        .from('submissions')
+        .insert(submissionPayload)
+        .select()
+        .single();
+
+      if (error) {
+        console.error("Error inserting submission:", error);
+        alert(`Upload failed: ${error.message || "Unknown error"}`);
+        setStatus("idle");
+        return;
+      }
+
       try {
         confetti({
           particleCount: 80,
@@ -54,29 +90,34 @@ export const UploadZone: React.FC<UploadZoneProps> = ({
       }
 
       const newEp: EpisodeSubmission = {
-        id: `VID-${Math.floor(8000 + Math.random() * 1000)}`,
-        recipeId: selectedRecipe.id,
-        recipeTitle: selectedRecipe.title,
-        environment: selectedRecipe.environment,
-        submittedAt: new Date().toISOString().replace("T", " ").substring(0, 19),
-        durationSeconds: selectedRecipe.expectedDurationSec,
-        totalFrames: 0, // Not applicable for raw drive links until processed
+        id: data.id,
+        operatorId: data.operator_id,
+        recipeId: data.recipe_id,
+        recipeTitle: data.recipe_title,
+        environment: data.environment as EpisodeSubmission["environment"],
+        submittedAt: data.submitted_at,
+        durationSeconds: data.duration_seconds,
+        totalFrames: 0,
         rgbSize: 0,
         depthSize: 0,
         kinematicsSize: 0,
-        totalSize: 0, // To be determined by backend
-        status: "PENDING",
-        qaReviewer: "Pending QA Auto-Ingest",
-        qaFeedback: `Submitted via link. Creator notes: "${notes || "None"}". Waiting for QA team to download and process.`,
+        totalSize: 0,
+        status: data.status as EpisodeSubmission["status"],
+        qaReviewer: data.qa_reviewer,
+        qaFeedback: data.qa_feedback,
         s3Hash: "pending_download",
-        rigId: "Smartphone/Camera",
-        teleopLatencyMs: 0,
+        rigId: data.rig_id,
+        teleopLatencyMs: data.teleop_latency_ms,
+        driveLink: data.drive_link,
       };
 
-      setCreatedEpisode(newEp);
       setStatus("success");
       onUploadComplete(newEp);
-    }, 1500);
+    } catch (err: any) {
+      console.error("Unexpected error:", err);
+      alert(`An unexpected error occurred: ${err.message || "Please check your console."}`);
+      setStatus("idle");
+    }
   };
 
   return (
@@ -136,7 +177,7 @@ export const UploadZone: React.FC<UploadZoneProps> = ({
               />
             </div>
             <p className="mt-2 text-[11px] text-zinc-500">
-              * Ensure the link sharing permissions are set to <strong className="text-zinc-700">"Anyone with the link can view"</strong> so our QA team can access it.
+              * Ensure the link sharing permissions are set to <strong className="text-zinc-700">&quot;Anyone with the link can view&quot;</strong> so our QA team can access it.
             </p>
           </div>
 

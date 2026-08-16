@@ -26,6 +26,7 @@ export interface Recipe {
 
 export interface EpisodeSubmission {
   id: string;
+  operatorId?: string;
   recipeId: string;
   recipeTitle: string;
   environment: EnvironmentType;
@@ -44,6 +45,7 @@ export interface EpisodeSubmission {
   s3Hash: string;
   rigId: string;
   teleopLatencyMs: number;
+  driveLink?: string;
 }
 
 export interface OperatorProfile {
@@ -86,4 +88,11 @@ export interface PayoutRecord {
   status: "PAID" | "PROCESSING" | "SCHEDULED";
   paidDate: string;
   transactionRef: string;
+}
+
+export interface AdminProfile {
+  id: string;
+  username: string;
+  createdAt: string;
+  lastLogin?: string;
 }

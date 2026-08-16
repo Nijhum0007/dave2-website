@@ -49,6 +49,7 @@ export default function OperatorPortalApp() {
         const displayName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
         setOperator((prev) => ({
           ...prev,
+          id: user.id,
           email: user.email || prev.email,
           name: displayName,
           username: displayName,
@@ -68,6 +69,72 @@ export default function OperatorPortalApp() {
   // Submissions State (Living state for uploaded episodes)
   const [submissions, setSubmissions] = useState<EpisodeSubmission[]>([]);
   const [payouts, setPayouts] = useState<PayoutRecord[]>([]);
+
+  useEffect(() => {
+    if (!operator.id) return;
+
+    const fetchSubmissions = async () => {
+      const { data, error } = await supabase
+        .from("submissions")
+        .select("*")
+        .eq("operator_id", operator.id)
+        .order("submitted_at", { ascending: false });
+
+      if (error) {
+        console.error("Error fetching submissions:", error);
+        return;
+      }
+
+      if (data) {
+        const formattedSubmissions: EpisodeSubmission[] = data.map((d: any) => ({
+          id: d.id,
+          operatorId: d.operator_id,
+          recipeId: d.recipe_id,
+          recipeTitle: d.recipe_title,
+          environment: d.environment,
+          submittedAt: d.submitted_at,
+          durationSeconds: d.duration_seconds,
+          totalFrames: 0,
+          rgbSize: 0,
+          depthSize: 0,
+          kinematicsSize: 0,
+          totalSize: 0,
+          status: d.status,
+          qaReviewer: d.qa_reviewer,
+          qaFeedback: d.qa_feedback,
+          s3Hash: "pending_download",
+          rigId: d.rig_id,
+          teleopLatencyMs: d.teleop_latency_ms,
+          driveLink: d.drive_link,
+        }));
+        setSubmissions(formattedSubmissions);
+      }
+    };
+
+    fetchSubmissions();
+
+    const channel = supabase
+      .channel("submissions_changes")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "submissions",
+          filter: `operator_id=eq.${operator.id}`,
+        },
+        (payload) => {
+          console.log("Realtime update received:", payload);
+          // Refetch to get the latest sorted data (or we could update state manually)
+          fetchSubmissions();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [operator.id, supabase]);
 
   // Auth Handlers
   const handleLoginSuccess = (email: string) => {
