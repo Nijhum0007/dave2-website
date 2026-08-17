@@ -35,7 +35,7 @@ export default function DevicesPage() {
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
           <div className="flex items-center gap-3">
             <Link href="/">
-              <img src="/logo.png" alt="Dave Logo" className="h-24 w-auto object-contain cursor-pointer invert" />
+              <img src="/logo.png" alt="Dave Logo" className="h-24 w-auto object-contain cursor-pointer" />
             </Link>
           </div>
 

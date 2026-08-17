@@ -159,7 +159,7 @@ export default function SetupAccountPage() {
       {/* Simple Header */}
       <header className="flex h-20 items-center justify-between px-6 lg:px-8 border-b border-zinc-100 shrink-0">
         <Link href="/" className="flex items-center gap-2">
-          <img src="/logo.png" alt="Dave Logo" className="h-10 w-auto object-contain invert" />
+          <img src="/logo.png" alt="Dave Logo" className="h-10 w-auto object-contain" />
           <span className="font-bold tracking-tight text-xl hidden sm:inline-block">Creator Network</span>
         </Link>
         <Link

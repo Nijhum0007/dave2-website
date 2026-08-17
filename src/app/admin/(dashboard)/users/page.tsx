@@ -2,6 +2,8 @@ import { createAdminClient } from '@/lib/supabase/admin';
 import { Users as UsersIcon, Search, MoreVertical, Ban, CheckCircle } from 'lucide-react';
 import { format } from 'date-fns';
 
+export const dynamic = 'force-dynamic';
+
 // Server component
 export default async function OperatorsPage() {
   const supabase = createAdminClient();
