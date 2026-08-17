@@ -77,7 +77,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       <div className="flex h-20 items-center justify-between border-b border-zinc-200 px-6">
         <div className="flex items-center gap-3">
           <div className="flex items-center mr-3">
-            <img src="/logo.png" alt="Dave Logo" className="h-10 w-auto object-contain invert" />
+            <img src="/logo.png" alt="Dave Logo" className="h-10 w-auto object-contain" />
           </div>
           <div>
             <div className="flex items-center gap-1.5">

@@ -95,7 +95,7 @@ export const AuthView: React.FC<AuthViewProps> = ({ onLoginSuccess }) => {
           {/* Header Brand */}
           <div className="text-center mb-8 flex flex-col items-center">
             <div className="mx-auto mb-4 flex justify-center">
-              <img src="/logo.png" alt="Dave Logo" className="h-16 w-auto object-contain invert" />
+              <img src="/logo.png" alt="Dave Logo" className="h-16 w-auto object-contain" />
             </div>
             <p className="mt-1 text-xs text-zinc-500">
               Physical AI Data Collection Portal

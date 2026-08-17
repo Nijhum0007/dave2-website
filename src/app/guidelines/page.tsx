@@ -32,7 +32,7 @@ export default function GuidelinesPage() {
       >
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
           <Link href="/" className="flex items-center gap-3">
-            <img src="/logo.png" alt="Dave Logo" className="h-24 w-auto object-contain invert" />
+            <img src="/logo.png" alt="Dave Logo" className="h-24 w-auto object-contain" />
           </Link>
 
           <nav className="hidden md:flex gap-8">
