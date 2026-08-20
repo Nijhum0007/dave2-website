@@ -114,7 +114,7 @@ export default function GuidelinesPage() {
                 </div>
                 <ul className="space-y-6">
                   <li className="flex gap-4">
-                    <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-zinc-200 bg-zinc-100 text-black">
+                    <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-500 text-white">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="h-3 w-3"><polyline points="20 6 9 17 4 12"></polyline></svg>
                     </div>
                     <div>
@@ -144,7 +144,7 @@ export default function GuidelinesPage() {
               </div>
 
               {/* Don'ts */}
-              <div className="rounded-[2rem] bg-rose-50 border border-rose-100 p-8 md:p-12">
+              <div className="rounded-[2rem] bg-zinc-50 border border-zinc-100 p-8 md:p-12">
                 <div className="flex items-center gap-3 mb-8">
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-zinc-200 bg-zinc-100 text-black">
                     <XCircle className="h-5 w-5" />
@@ -153,7 +153,7 @@ export default function GuidelinesPage() {
                 </div>
                 <ul className="space-y-6">
                   <li className="flex gap-4">
-                    <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-zinc-200 bg-zinc-100 text-black">
+                    <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-rose-500 text-white">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="h-3 w-3"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                     </div>
                     <div>
