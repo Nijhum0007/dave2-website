@@ -69,7 +69,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, operatorId, onToggleS
         (payload) => {
           console.log("Realtime notification received:", payload);
           if (payload.eventType === "INSERT") {
-            setNotifications((prev) => [payload.new, ...prev]);
+            setNotifications((prev) => [(payload.new as unknown) as Notification, ...prev]);
           } else {
             // Re-fetch to keep it simple for update/delete changes
             fetchNotifications();
