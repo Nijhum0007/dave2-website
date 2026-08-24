@@ -116,7 +116,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, operatorId, onToggleS
           </button>
         )}
         <div className="flex items-center">
-          <span 
+          <span
             className="text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-zinc-700 to-black capitalize"
             style={{ fontFamily: "var(--font-plus-jakarta), sans-serif" }}
           >
@@ -163,13 +163,12 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, operatorId, onToggleS
                 {notifications.map((n) => (
                   <div
                     key={n.id}
-                    className={`rounded-lg border p-2.5 text-xs transition-colors ${
-                      n.type === "success"
+                    className={`rounded-lg border p-2.5 text-xs transition-colors ${n.type === "success"
                         ? "border-emerald-200 bg-emerald-50"
                         : n.type === "warning"
-                        ? "border-amber-200 bg-amber-50"
-                        : "border-rose-200 bg-rose-50"
-                    }`}
+                          ? "border-amber-200 bg-amber-50"
+                          : "border-rose-200 bg-rose-50"
+                      }`}
                   >
                     <div className="flex items-start justify-between">
                       <p className="font-semibold text-zinc-800">{n.title}</p>
