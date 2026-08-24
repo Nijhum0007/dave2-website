@@ -11,10 +11,10 @@ This report outlines the business strategy, user upload workflows, hardware requ
 **Why?** 
 1. **Garbage In, Garbage Out:** If you tell people to upload anything, 90% of the submissions will be useless (people walking down the street, staring at walls, or recording their TV). 
 2. **What AI Labs Actually Buy:** Companies training robots want highly specific "manipulation" tasks. They want to see hands interacting with objects. They need videos of people folding laundry, opening doors, picking up mugs, using a screwdriver, or wiping a table. 
-3. **The Bounty System:** You should implement a "Bounty Board" on your website. For example:
-   - *Bounty 1:* "Open and close a microwave" (Requires Tier 2 or 3) - Payout: $2
-   - *Bounty 2:* "Fold a t-shirt" (Requires Tier 1 or 2) - Payout: $5
-   This gives users a fun, clear mission and guarantees you only collect data that you can actually sell.
+3. **The Bounty System (Estimated Time Target Wage):** You should implement a "Bounty Board" on your website. Rather than paying by the second, we pay a fixed rate based on the estimated time to complete a task (Option 3 Pricing Model). For example:
+   - *Bounty 1:* "Open and close a microwave 10 times" - Estimated Time: 30 mins - Payout: $2.50
+   - *Bounty 2:* "Route Power Cables" - Estimated Time: 60 mins - Payout: $5.00
+   This gives users a fun, clear mission with a predictable payout, ensuring quality execution over rushed spam.
 
 ---
 
@@ -63,9 +63,9 @@ Since you are using Google Drive links to save on database storage costs, every 
 > **1. Hands Free (POV Only)**
 > We need to see exactly what you see. You cannot hold the phone in your hand while recording. You must use a chest mount, head mount, or neck lanyard so both of your hands are visible in the video while you do the task.
 > 
-> **2. Choose Your Payout Tier**
-> - **Standard Payout (Tier 3):** Use any Android or iPhone. Open your normal camera, record an `.mp4` video, and upload it. 
-> - **Premium Payout (Tier 2):** If you have an iPhone 15 Pro, 16 Pro, or iPad Pro, you have a secret LiDAR sensor! Download the **Record3D** app or **Stray Scanner** app, record using the app, and upload the special `.r3d` or `.zip` file to get paid a premium rate!
+> **2. Flat Rate Payouts (Estimated Time)**
+> We pay a fair, fixed rate for each task based on how long it should reasonably take to set up, record, and upload. 
+> For example, if a task says "Estimated Time: 30 mins", the payout will reflect a fair target wage for that half-hour, regardless of exactly how many minutes you actually take. Take your time and follow the instructions perfectly!
 > 
 > **3. How to Submit**
 > - Do not upload the video directly to our site.

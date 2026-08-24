@@ -1,16 +1,18 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { Activity, Database, Users, CheckCircle, Clock, XCircle } from 'lucide-react';
-import { EpisodeSubmission } from '@/lib/types';
+
+interface DashboardSubmission {
+  status: string;
+}
 
 export default function AdminDashboard() {
-  const [submissions, setSubmissions] = useState<EpisodeSubmission[]>([]);
+  const supabase = useMemo(() => createClient(), []);
+  const [submissions, setSubmissions] = useState<DashboardSubmission[]>([]);
   const [operatorCount, setOperatorCount] = useState(0);
   const [loading, setLoading] = useState(true);
-
-  const supabase = createClient();
 
   useEffect(() => {
     fetchData();
@@ -35,12 +37,12 @@ export default function AdminDashboard() {
       supabase.removeChannel(submissionsChannel);
       supabase.removeChannel(operatorsChannel);
     };
-  }, [supabase]);
+  }, []);
 
   const fetchData = async () => {
     // Fetch submissions
     const { data: subsData } = await supabase.from('submissions').select('*');
-    if (subsData) setSubmissions(subsData as any);
+    if (subsData) setSubmissions(subsData as DashboardSubmission[]);
 
     // Fetch operator count
     const { count: opsCount } = await supabase.from('operators').select('*', { count: 'exact', head: true });

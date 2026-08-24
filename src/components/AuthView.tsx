@@ -55,11 +55,6 @@ export const AuthView: React.FC<AuthViewProps> = ({ onLoginSuccess }) => {
     }
   };
 
-  const handleQuickDemoFill = () => {
-    setEmail("creator_042@dave.com");
-    setPassword("PhysicalAI_Teleop_2026!");
-    setError(null);
-  };
 
   return (
     <div className="relative min-h-screen w-full flex items-center justify-center bg-zinc-50 bg-grid-pattern px-4 py-12">
@@ -81,8 +76,8 @@ export const AuthView: React.FC<AuthViewProps> = ({ onLoginSuccess }) => {
         <div className="mb-4 flex items-center justify-between px-1">
           <div className="flex items-center gap-2">
             <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75"></span>
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-black"></span>
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-zinc-400 opacity-75"></span>
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-zinc-900"></span>
             </span>
             <span className="font-mono text-[11px] font-semibold tracking-wider text-black uppercase">
               Gated Ingestion Gateway • v2.4
@@ -103,8 +98,8 @@ export const AuthView: React.FC<AuthViewProps> = ({ onLoginSuccess }) => {
           </div>
 
           {error && (
-            <div className="mb-6 flex items-center gap-2.5 rounded-lg border border-rose-500/30 bg-rose-950/30 p-3 text-xs text-rose-300">
-              <AlertCircle className="h-4 w-4 shrink-0 text-rose-400" />
+            <div className="mb-6 flex items-center gap-2.5 rounded-lg border border-rose-200 bg-rose-50 p-3 text-xs text-rose-700">
+              <AlertCircle className="h-4 w-4 shrink-0 text-rose-600" />
               <span>{error}</span>
             </div>
           )}
@@ -156,7 +151,7 @@ export const AuthView: React.FC<AuthViewProps> = ({ onLoginSuccess }) => {
             {/* Hardware Key Checkbox */}
             <div className="flex items-center justify-between rounded-lg border border-zinc-200 bg-white p-2.5 text-xs">
               <div className="flex items-center gap-2">
-                <Fingerprint className="h-4 w-4 text-emerald-400" />
+                <Fingerprint className="h-4 w-4 text-emerald-600" />
                 <span className="text-zinc-700 font-medium">
                   Telemetry Rig Key (RIG-042)
                 </span>
@@ -173,32 +168,22 @@ export const AuthView: React.FC<AuthViewProps> = ({ onLoginSuccess }) => {
             <button
               type="submit"
               disabled={isLoading}
-              className="group relative flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-zinc-900 to-black py-3 text-xs font-bold uppercase tracking-wider text-white transition-all hover:shadow-lg active:scale-[0.98] disabled:opacity-50"
+              className="group relative flex w-full items-center justify-center gap-2 rounded-xl bg-black py-3 text-xs font-bold uppercase tracking-wider text-white transition-all hover:bg-zinc-800 active:scale-[0.98] disabled:opacity-50"
             >
               {isLoading ? (
                 <>
-                  <Radio className="h-4 w-4 animate-spin" />
+                  <Radio className="h-4 w-4 animate-spin text-white" />
                   <span>Verifying Rig Telemetry...</span>
                 </>
               ) : (
                 <>
                   <span>Authenticate Operator</span>
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 text-white" />
                 </>
               )}
             </button>
           </form>
 
-          {/* Quick Demo Pre-fill */}
-          <div className="mt-4 flex items-center justify-center">
-            <button
-              type="button"
-              onClick={handleQuickDemoFill}
-              className="text-[11px] font-mono text-black hover:text-zinc-700 underline underline-offset-4"
-            >
-              ⚡ Auto-fill Demo Credentials (Operator 042)
-            </button>
-          </div>
         </div>
 
         {/* Bottom Footer Info */}

@@ -1,10 +1,23 @@
 'use client';
 
-import { Bell, Search } from 'lucide-react';
+import { Bell, Search, Menu } from 'lucide-react';
 
-export default function AdminHeader() {
+interface AdminHeaderProps {
+  onToggleSidebar?: () => void;
+}
+
+export default function AdminHeader({ onToggleSidebar }: AdminHeaderProps) {
   return (
-    <header className="h-16 border-b border-zinc-800 bg-zinc-950/50 backdrop-blur-md flex items-center justify-between px-8 sticky top-0 z-10">
+    <header className="h-16 border-b border-zinc-800 bg-zinc-950/50 backdrop-blur-md flex items-center justify-between px-4 md:px-8 sticky top-0 z-10">
+      {onToggleSidebar && (
+        <button
+          onClick={onToggleSidebar}
+          className="mr-3 flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900 text-zinc-400 transition-colors hover:text-white md:hidden shrink-0"
+          aria-label="Toggle Menu"
+        >
+          <Menu className="w-5 h-5" />
+        </button>
+      )}
       <div className="flex-1 max-w-xl">
         <div className="relative">
           <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />

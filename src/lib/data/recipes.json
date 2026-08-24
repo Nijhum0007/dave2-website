@@ -1,0 +1,95 @@
+[
+  {
+    "id": "rec-1",
+    "code": "HH-DISH-001",
+    "title": "Load Dishwasher - Kitchen A",
+    "environment": "Household",
+    "hardwareRig": "Tier 3 (Standard Phone) or Tier 2 (iPhone Pro)",
+    "estimatedTime": "45 mins",
+    "payoutRate": 3.75,
+    "description": "Record yourself loading at least 5 different types of dishes (plates, bowls, cups, silverware) into a dishwasher from a countertop. Ensure the dishwasher door starts closed, is opened during the video, and closed at the end. Perform this action 10 times from slightly different angles.",
+    "targetFps": 30,
+    "expectedDurationSec": 180,
+    "acceptanceRate": 92.5,
+    "difficulty": "Beginner",
+    "requiredObjects": [
+      "Dishwasher",
+      "Plates",
+      "Cups",
+      "Silverware"
+    ],
+    "tags": [
+      "Household",
+      "Kitchen",
+      "Pick and Place"
+    ]
+  },
+  {
+    "id": "rec-2",
+    "code": "IND-CABLE-004",
+    "title": "Route Power Cables - Server Rack",
+    "environment": "Warehouse",
+    "hardwareRig": "Tier 1 (Depth Camera) or Tier 2 (iPhone Pro)",
+    "estimatedTime": "60 mins",
+    "payoutRate": 5,
+    "description": "Demonstrate routing 3 thick power cables (C13/C14) through a standard 1U cable management arm. Clip the cables securely. Perform this full action 5 times.",
+    "targetFps": 30,
+    "expectedDurationSec": 300,
+    "acceptanceRate": 78.2,
+    "difficulty": "Expert",
+    "requiredObjects": [
+      "Server Rack",
+      "Power Cables",
+      "Cable Management Arm"
+    ],
+    "tags": [
+      "IT",
+      "Dexterity",
+      "Insertion"
+    ]
+  },
+  {
+    "id": "rec-3",
+    "code": "MED-VIAL-012",
+    "title": "Uncap and Recap Medicine Vials",
+    "environment": "Clinical",
+    "hardwareRig": "Tier 2 (iPhone Pro LiDAR)",
+    "estimatedTime": "30 mins",
+    "payoutRate": 2.5,
+    "description": "Pick up a standard plastic medicine vial, twist off the child-proof cap, place the cap on the table, pick it back up, and securely recap the vial. Perform this action 20 times.",
+    "targetFps": 60,
+    "expectedDurationSec": 45,
+    "acceptanceRate": 95,
+    "difficulty": "Beginner",
+    "requiredObjects": [
+      "Medicine Vial",
+      "Child-proof Cap",
+      "Clean Table"
+    ],
+    "tags": [
+      "Fine Motor",
+      "Twisting",
+      "Medical"
+    ]
+  },
+  {
+    "id": "rec-1787233241326",
+    "code": "NEW-250",
+    "title": "Pouring Coffee",
+    "environment": "Household",
+    "hardwareRig": "Tier 3 (Standard Phone)",
+    "estimatedTime": "30 mins",
+    "payoutRate": 2.5,
+    "description": "1. put a mug on the table\n2. hold the Jug with coffee in it\n3. Pour it while keeping the hands, jug and mug all clearly visible\n4 After pouring the coffee to the mug, place the Jug down on the table. ",
+    "targetFps": 30,
+    "expectedDurationSec": 60,
+    "acceptanceRate": 100,
+    "difficulty": "Beginner",
+    "requiredObjects": [
+      "Table",
+      "Mug",
+      "Jug (with coffee)"
+    ],
+    "tags": []
+  }
+]

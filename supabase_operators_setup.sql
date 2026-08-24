@@ -4,6 +4,7 @@ CREATE TABLE public.operators (
     email TEXT NOT NULL,
     name TEXT,
     status TEXT DEFAULT 'ACTIVE', -- ACTIVE, SUSPENDED, BANNED
+    bank_details JSONB DEFAULT '{}'::jsonb,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );

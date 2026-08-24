@@ -3,13 +3,33 @@ import { createAdminClient } from '@/lib/supabase/admin';
 import { createAdminToken } from '@/lib/auth/jwt';
 import bcrypt from 'bcryptjs';
 import { cookies } from 'next/headers';
+import { checkRateLimit } from '@/lib/auth/rateLimit';
 
 export async function POST(request: Request) {
   try {
-    const { username, password } = await request.json();
+    // H1: Rate limiting by IP
+    const forwarded = request.headers.get('x-forwarded-for');
+    const ip = forwarded?.split(',')[0]?.trim() || 'unknown';
+    const { allowed, retryAfterSec } = checkRateLimit(`login:${ip}`, 5, 15 * 60 * 1000);
+
+    if (!allowed) {
+      return NextResponse.json(
+        { error: 'Too many login attempts. Please try again later.' },
+        { status: 429, headers: { 'Retry-After': String(retryAfterSec) } }
+      );
+    }
+
+    // H5: Input validation
+    const body = await request.json();
+    const username = typeof body.username === 'string' ? body.username.trim() : '';
+    const password = typeof body.password === 'string' ? body.password : '';
 
     if (!username || !password) {
       return NextResponse.json({ error: 'Username and password are required' }, { status: 400 });
+    }
+
+    if (username.length > 100 || password.length > 200) {
+      return NextResponse.json({ error: 'Invalid input' }, { status: 400 });
     }
 
     const supabase = createAdminClient();
@@ -38,14 +58,14 @@ export async function POST(request: Request) {
     // Create JWT
     const token = await createAdminToken({ id: admin.id, username: admin.username });
 
-    // Set cookie
+    // H2: Hardened cookie settings
     const cookieStore = await cookies();
     cookieStore.set('admin_token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      sameSite: 'strict', // H2: Changed from 'lax' to 'strict' to prevent CSRF
       path: '/',
-      maxAge: 60 * 60 * 24, // 1 day
+      maxAge: 60 * 60 * 2, // H2: Reduced from 24 hours to 2 hours
     });
 
     return NextResponse.json({ success: true });

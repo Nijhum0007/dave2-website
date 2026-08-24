@@ -48,6 +48,15 @@ export interface EpisodeSubmission {
   driveLink?: string;
 }
 
+export interface BankDetails {
+  accountName: string;
+  bankName: string;
+  branch: string;
+  district: string;
+  routingNumber: string;
+  accountNumber: string;
+}
+
 export interface OperatorProfile {
   id: string;
   username: string;
@@ -57,6 +66,7 @@ export interface OperatorProfile {
   badge: string;
   payoutMethod: "Bank Transfer" | "PayPal" | "Instant Debit";
   bankAccountLast4: string;
+  bankDetails?: BankDetails;
   uploadOverWifiOnly: boolean;
   saveOriginalVideo: boolean;
   emailNotifications: boolean;

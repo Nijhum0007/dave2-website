@@ -49,6 +49,19 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
   const pendingSubmissions = submissions.filter((s) => s.status === "PENDING").length;
   const approvalPercentage = totalSubmissions > 0 ? ((approvedSubmissions / totalSubmissions) * 100).toFixed(1) : "0.0";
 
+  // Calculate weekly growth (last 7 days vs prior 7 days)
+  const now = new Date();
+  const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+  const fourteenDaysAgo = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000);
+  const recentCount = submissions.filter(s => new Date(s.submittedAt) >= sevenDaysAgo).length;
+  const previousCount = submissions.filter(s => {
+    const date = new Date(s.submittedAt);
+    return date >= fourteenDaysAgo && date < sevenDaysAgo;
+  }).length;
+  const weeklyGrowth = previousCount > 0
+    ? Math.round(((recentCount - previousCount) / previousCount) * 100)
+    : null;
+
   // Filtered recent activity
   const filteredSubmissions = submissions.filter((item) => {
     const matchesSearch =
@@ -107,9 +120,10 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
             <span className="text-3xl font-black font-mono tracking-tight text-zinc-900">
               {totalSubmissions.toLocaleString()}
             </span>
-            {totalSubmissions > 0 && (
-              <span className="text-xs font-semibold text-emerald-600 flex items-center">
-                <TrendingUp className="h-3 w-3 mr-0.5 inline" /> +12%
+            {weeklyGrowth !== null && (
+              <span className={`text-xs font-semibold flex items-center ${weeklyGrowth >= 0 ? 'text-emerald-600' : 'text-rose-500'}`}>
+                <TrendingUp className={`h-3 w-3 mr-0.5 inline ${weeklyGrowth < 0 ? 'rotate-180' : ''}`} />
+                {weeklyGrowth >= 0 ? '+' : ''}{weeklyGrowth}%
               </span>
             )}
           </div>
@@ -117,49 +131,49 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
         </div>
 
         {/* Metric 2: QA Approved */}
-        <div className="rounded-2xl border border-emerald-200 bg-emerald-50/50 p-5 shadow-sm">
+        <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-emerald-800">
+            <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
               QA Approved
             </span>
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-100 border border-emerald-200 text-emerald-600">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-zinc-100 border border-zinc-200 text-zinc-700">
               <CheckCircle2 className="h-4 w-4" />
             </div>
           </div>
           <div className="mt-3 flex items-baseline gap-2">
-            <span className="text-3xl font-black font-mono tracking-tight text-emerald-600">
+            <span className="text-3xl font-black font-mono tracking-tight text-zinc-900">
               {approvalPercentage}%
             </span>
-            <span className="text-xs font-semibold text-emerald-600">
+            <span className="text-xs font-semibold text-zinc-500">
               ({approvedSubmissions.toLocaleString()} videos)
             </span>
           </div>
-          <p className="mt-1 text-[11px] text-emerald-600/80">
+          <p className="mt-1 text-[11px] text-zinc-500">
             {totalSubmissions === 0 ? "No ratings yet" : parseFloat(approvalPercentage) >= 90 ? "Excellent approval rating" : "Average approval rating"}
           </p>
         </div>
 
         {/* Metric 3: Pending Review */}
-        <div className="rounded-2xl border border-amber-200 bg-amber-50/50 p-5 shadow-sm">
+        <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-amber-800">
+            <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
               Pending Review
             </span>
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-100 border border-amber-200 text-amber-600">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-zinc-100 border border-zinc-200 text-zinc-700">
               <Clock className="h-4 w-4" />
             </div>
           </div>
           <div className="mt-3 flex items-baseline gap-2">
-            <span className="text-3xl font-black font-mono tracking-tight text-amber-600">
+            <span className="text-3xl font-black font-mono tracking-tight text-zinc-900">
               {pendingSubmissions}
             </span>
             {pendingSubmissions > 0 && (
-              <span className="rounded bg-amber-100 px-1.5 py-0.5 font-mono text-[10px] font-bold text-amber-700">
+              <span className="rounded-md border border-zinc-200 bg-zinc-100 px-1.5 py-0.5 font-mono text-[10px] font-bold text-zinc-700">
                 In Pipeline
               </span>
             )}
           </div>
-          <p className="mt-1 text-[11px] text-amber-700/80">
+          <p className="mt-1 text-[11px] text-zinc-500">
             {pendingSubmissions > 0 ? "Currently being reviewed by QA team" : "No pending reviews"}
           </p>
         </div>
@@ -230,8 +244,8 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
                   onClick={() => setStatusFilter(tab)}
                   className={`rounded-lg px-2.5 py-1 font-semibold text-[11px] transition-all ${
                     statusFilter === tab
-                      ? "bg-zinc-100 text-cyan-300 shadow-sm"
-                      : "text-zinc-500 hover:text-zinc-800"
+                      ? "bg-zinc-900 text-white shadow-sm"
+                      : "text-zinc-500 hover:text-zinc-900"
                   }`}
                 >
                   {tab}
@@ -288,12 +302,12 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
                       <span
                         className={`inline-flex items-center rounded-md px-2 py-0.5 text-[10px] font-medium border ${
                           ep.environment === "Clinical"
-                            ? "bg-purple-950/40 text-purple-300 border-purple-800/40"
+                            ? "bg-purple-50 text-purple-700 border-purple-200"
                             : ep.environment === "Household"
-                            ? "bg-blue-950/40 text-blue-300 border-blue-800/40"
+                            ? "bg-blue-50 text-blue-700 border-blue-200"
                             : ep.environment === "Industrial"
-                            ? "bg-amber-950/40 text-amber-300 border-amber-800/40"
-                            : "bg-emerald-950/40 text-emerald-300 border-emerald-800/40"
+                            ? "bg-amber-50 text-amber-700 border-amber-200"
+                            : "bg-emerald-50 text-emerald-700 border-emerald-200"
                         }`}
                       >
                         {ep.environment}
@@ -321,20 +335,20 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
                     {/* Status Badge */}
                     <td className="py-3.5 px-3 text-center">
                       {isApproved && (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-emerald-950/60 px-2.5 py-1 text-[11px] font-bold text-emerald-400 border border-emerald-500/40 shadow-[0_0_12px_rgba(16,185,129,0.2)]">
-                          <CheckCircle2 className="h-3 w-3" />
+                        <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700 border border-emerald-200">
+                          <CheckCircle2 className="h-3 w-3 text-emerald-600" />
                           Approved
                         </span>
                       )}
                       {isPending && (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-amber-950/60 px-2.5 py-1 text-[11px] font-bold text-amber-400 border border-amber-500/40">
-                          <Clock className="h-3 w-3 animate-spin" />
+                        <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-0.5 text-[11px] font-semibold text-amber-700 border border-amber-200">
+                          <Clock className="h-3 w-3 animate-spin text-amber-600" />
                           Pending
                         </span>
                       )}
                       {isRejected && (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-rose-950/60 px-2.5 py-1 text-[11px] font-bold text-rose-400 border border-rose-500/40 shadow-[0_0_12px_rgba(244,63,94,0.2)]">
-                          <XCircle className="h-3 w-3" />
+                        <span className="inline-flex items-center gap-1 rounded-full bg-rose-50 px-2.5 py-0.5 text-[11px] font-semibold text-rose-700 border border-rose-200">
+                          <XCircle className="h-3 w-3 text-rose-600" />
                           Rejected
                         </span>
                       )}
@@ -363,7 +377,7 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
       {/* Episode Inspection Modal */}
       {selectedEpisode && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-in fade-in duration-150">
-          <div className="relative w-full max-w-xl rounded-2xl border border-zinc-200 bg-white p-6 shadow-2xl">
+          <div className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl border border-zinc-200 bg-white p-6 shadow-2xl">
             <div className="flex items-center justify-between pb-4 border-b border-zinc-200">
               <div className="flex items-center gap-2">
                 <span className="font-mono text-sm font-bold text-black">
@@ -396,13 +410,13 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     {selectedEpisode.status === "APPROVED" && (
-                      <CheckCircle2 className="h-5 w-5 text-emerald-400" />
+                      <CheckCircle2 className="h-5 w-5 text-emerald-600" />
                     )}
                     {selectedEpisode.status === "PENDING" && (
-                      <Clock className="h-5 w-5 text-amber-400" />
+                      <Clock className="h-5 w-5 text-amber-600" />
                     )}
                     {selectedEpisode.status === "REJECTED" && (
-                      <AlertOctagon className="h-5 w-5 text-rose-400" />
+                      <AlertOctagon className="h-5 w-5 text-rose-600" />
                     )}
                     <div>
                       <h4 className="font-bold text-zinc-900">

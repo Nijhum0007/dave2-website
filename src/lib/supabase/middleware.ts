@@ -15,11 +15,10 @@ export async function updateSession(request: NextRequest) {
     const adminToken = request.cookies.get('admin_token')?.value;
     let isAdmin = false;
     
-    if (adminToken) {
+    if (adminToken && process.env.ADMIN_JWT_SECRET) {
       try {
         const { jwtVerify } = await import('jose');
-        const secretKey = process.env.ADMIN_JWT_SECRET || 'fallback-secret-for-dev-only-change-me';
-        const encodedKey = new TextEncoder().encode(secretKey);
+        const encodedKey = new TextEncoder().encode(process.env.ADMIN_JWT_SECRET);
         await jwtVerify(adminToken, encodedKey, { algorithms: ['HS256'] });
         isAdmin = true;
       } catch (e) {
@@ -37,11 +36,10 @@ export async function updateSession(request: NextRequest) {
   // Admin trying to access admin login while already logged in
   if (request.nextUrl.pathname.startsWith('/admin/login')) {
     const adminToken = request.cookies.get('admin_token')?.value;
-    if (adminToken) {
+    if (adminToken && process.env.ADMIN_JWT_SECRET) {
       try {
         const { jwtVerify } = await import('jose');
-        const secretKey = process.env.ADMIN_JWT_SECRET || 'fallback-secret-for-dev-only-change-me';
-        const encodedKey = new TextEncoder().encode(secretKey);
+        const encodedKey = new TextEncoder().encode(process.env.ADMIN_JWT_SECRET);
         await jwtVerify(adminToken, encodedKey, { algorithms: ['HS256'] });
         
         const url = request.nextUrl.clone();

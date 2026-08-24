@@ -1,68 +1,15 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, XCircle, AlertTriangle, ShieldCheck, Zap, Camera } from "lucide-react";
+import { LandingNavbar } from "@/components/LandingNavbar";
 
 export default function GuidelinesPage() {
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY && currentScrollY > 80) {
-        setIsVisible(false);
-      } else {
-        setIsVisible(true);
-      }
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
-
   return (
     <div className="min-h-screen bg-white text-zinc-900 font-sans selection:bg-cyan-500 selection:text-white overflow-x-hidden">
       {/* Navbar */}
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 bg-white border-b border-zinc-100 transition-transform duration-300 ${isVisible ? "translate-y-0" : "-translate-y-full"
-          }`}
-      >
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
-          <Link href="/" className="flex items-center gap-3">
-            <img src="/logo.png" alt="Dave Logo" className="h-24 w-auto object-contain" />
-          </Link>
-
-          <nav className="hidden md:flex gap-8">
-            <Link href="/guidelines" className="text-[15px] font-bold text-black border-b-2 border-black pb-1">
-              Guidelines
-            </Link>
-            <Link href="/#hardware" className="text-[15px] font-medium text-zinc-800 hover:text-black transition-colors">
-              Devices
-            </Link>
-            <Link href="/#payouts" className="text-[15px] font-medium text-zinc-800 hover:text-black transition-colors">
-              Payouts
-            </Link>
-          </nav>
-
-          <div className="flex items-center gap-4">
-            <Link
-              href="/login"
-              className="hidden md:inline-flex h-10 items-center justify-center rounded-md border border-zinc-200 bg-white px-5 text-[15px] font-medium text-zinc-900 transition-colors hover:bg-zinc-50"
-            >
-              Log In
-            </Link>
-            <Link
-              href="/apply"
-              className="inline-flex h-10 items-center justify-center rounded-md bg-black px-5 text-[15px] font-medium text-white transition-colors hover:bg-zinc-800"
-            >
-              Apply as Creator
-            </Link>
-          </div>
-        </div>
-      </header>
+      <LandingNavbar />
 
       <main className="pt-20">
         {/* Hero Section */}

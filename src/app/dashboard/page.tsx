@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Sidebar } from "@/components/Sidebar";
@@ -11,14 +11,11 @@ import { ActiveRecipes } from "@/components/ActiveRecipes";
 import { UploadZone } from "@/components/UploadZone";
 import { PayoutsQA } from "@/components/PayoutsQA";
 import { SettingsView } from "@/components/SettingsView";
-import {
-  MOCK_RECIPES,
-} from "@/lib/mockData";
-import { EpisodeSubmission, OperatorProfile, PayoutRecord } from "@/lib/types";
+import { Recipe, EpisodeSubmission, OperatorProfile, PayoutRecord, BankDetails } from "@/lib/types";
 
 export default function OperatorPortalApp() {
   const router = useRouter();
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
 
   // Authentication State (Gated Access)
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -47,12 +44,21 @@ export default function OperatorPortalApp() {
         const namePart = user.email.split("@")[0];
         // Capitalize the name part for a nicer display
         const displayName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
+        
+        // Fetch operator from database to get real data (e.g., bank details)
+        const { data: opData } = await supabase
+          .from('operators')
+          .select('*')
+          .eq('id', user.id)
+          .single();
+          
         setOperator((prev) => ({
           ...prev,
           id: user.id,
           email: user.email || prev.email,
-          name: displayName,
-          username: displayName,
+          name: opData?.name || displayName,
+          username: opData?.name || displayName,
+          bankDetails: opData?.bank_details || undefined,
         }));
       } else {
         // If the user navigates back via client history without a session, boot them to home.
@@ -60,15 +66,32 @@ export default function OperatorPortalApp() {
       }
     };
     fetchUser();
-  }, [supabase]);
+  }, []);
 
   // Active Tab State
   const [activeTab, setActiveTab] = useState("dashboard");
   const [targetRecipeIdForUpload, setTargetRecipeIdForUpload] = useState<string | undefined>();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // Submissions State (Living state for uploaded episodes)
   const [submissions, setSubmissions] = useState<EpisodeSubmission[]>([]);
   const [payouts, setPayouts] = useState<PayoutRecord[]>([]);
+  const [liveRecipes, setLiveRecipes] = useState<Recipe[]>([]);
+
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        const res = await fetch('/api/recipes');
+        if (res.ok) {
+          const data = await res.json();
+          setLiveRecipes(data);
+        }
+      } catch (err) {
+        console.error('Failed to fetch recipes:', err);
+      }
+    };
+    fetchRecipes();
+  }, []);
 
   useEffect(() => {
     if (!operator.id) return;
@@ -113,6 +136,40 @@ export default function OperatorPortalApp() {
 
     fetchSubmissions();
 
+    // Fetch payouts from database
+    const fetchPayouts = async () => {
+      const { data, error } = await supabase
+        .from("payouts")
+        .select("*")
+        .eq("operator_id", operator.id)
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("Error fetching payouts:", error);
+        return;
+      }
+
+      if (data) {
+        const formattedPayouts: PayoutRecord[] = data.map((d: any) => ({
+          id: d.id,
+          period: d.paid_at
+            ? `Week of ${new Date(d.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`
+            : `${new Date(d.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - Current`,
+          episodesCount: 0,
+          approvedCount: 0,
+          grossAmount: Number(d.amount),
+          status: d.status as PayoutRecord["status"],
+          paidDate: d.paid_at
+            ? new Date(d.paid_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+            : 'Pending',
+          transactionRef: d.transaction_ref || 'N/A',
+        }));
+        setPayouts(formattedPayouts);
+      }
+    };
+
+    fetchPayouts();
+
     const channel = supabase
       .channel("submissions_changes")
       .on(
@@ -125,16 +182,32 @@ export default function OperatorPortalApp() {
         },
         (payload) => {
           console.log("Realtime update received:", payload);
-          // Refetch to get the latest sorted data (or we could update state manually)
           fetchSubmissions();
+        }
+      )
+      .subscribe();
+
+    const payoutsChannel = supabase
+      .channel("payouts_changes")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "payouts",
+          filter: `operator_id=eq.${operator.id}`,
+        },
+        () => {
+          fetchPayouts();
         }
       )
       .subscribe();
 
     return () => {
       supabase.removeChannel(channel);
+      supabase.removeChannel(payoutsChannel);
     };
-  }, [operator.id, supabase]);
+  }, [operator.id]);
 
   // Auth Handlers
   const handleLoginSuccess = (email: string) => {
@@ -174,6 +247,26 @@ export default function OperatorPortalApp() {
     setSubmissions((prev) => [newEpisode, ...prev]);
   };
 
+  const handleUpdateBankDetails = async (bankDetails: BankDetails) => {
+    if (!operator.id) return;
+    
+    const { error } = await supabase
+      .from('operators')
+      .update({ bank_details: bankDetails })
+      .eq('id', operator.id);
+      
+    if (error) {
+      console.error("Error updating bank details:", error);
+      throw error;
+    }
+    
+    setOperator(prev => ({
+      ...prev,
+      bankDetails,
+      bankAccountLast4: bankDetails.accountNumber.slice(-4)
+    }));
+  };
+
   // If not authenticated, render Gated Auth View
   if (!isAuthenticated) {
     return <AuthView onLoginSuccess={handleLoginSuccess} />;
@@ -181,26 +274,33 @@ export default function OperatorPortalApp() {
 
   // Derived metrics
   const currentEarnings = payouts.filter(p => p.status === "PROCESSING").reduce((acc, p) => acc + p.grossAmount, 0);
-  const liveRecipesCount = MOCK_RECIPES.length;
+  const liveRecipesCount = liveRecipes.length;
 
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900 flex font-sans antialiased selection:bg-black selection:text-white">
       {/* Sidebar Navigation */}
       <Sidebar
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        setActiveTab={(tab) => {
+          setActiveTab(tab);
+          setIsSidebarOpen(false);
+        }}
         operator={operator}
         onLogout={handleLogout}
         currentEarnings={currentEarnings}
         liveRecipesCount={liveRecipesCount}
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
       />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col pl-72 min-w-0 transition-all duration-300">
+      <div className="flex-1 flex flex-col pl-0 md:pl-20 min-w-0 transition-all duration-300">
         {/* Sticky Header */}
         <Header
           activeTab={activeTab}
+          operatorId={operator.id}
           onNavigateToUpload={() => handleNavigateToUpload()}
+          onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
         />
 
         {/* View Content */}
@@ -217,14 +317,14 @@ export default function OperatorPortalApp() {
 
           {activeTab === "recipes" && (
             <ActiveRecipes
-              recipes={MOCK_RECIPES}
+              recipes={liveRecipes}
               onSelectRecipeForUpload={(recipeId) => handleNavigateToUpload(recipeId)}
             />
           )}
 
           {activeTab === "upload" && (
             <UploadZone
-              recipes={MOCK_RECIPES}
+              recipes={liveRecipes}
               initialRecipeId={targetRecipeIdForUpload}
               onUploadComplete={handleUploadComplete}
               onNavigateToDashboard={handleNavigateToDashboard}
@@ -239,7 +339,7 @@ export default function OperatorPortalApp() {
             />
           )}
 
-          {activeTab === "settings" && <SettingsView operator={operator} />}
+          {activeTab === "settings" && <SettingsView operator={operator} onUpdateBankDetails={handleUpdateBankDetails} />}
         </main>
 
         {/* Bottom subtle system footer */}

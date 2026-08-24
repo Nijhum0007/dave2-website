@@ -1,112 +1,132 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { createClient } from "@/lib/supabase/client";
 import {
   Activity,
   Bell,
-  Cpu,
-  Radio,
-  Server,
-  Sparkles,
-  Wifi,
   X,
-  CheckCircle2,
-  AlertTriangle,
+  Menu,
 } from "lucide-react";
-import { MOCK_OPERATOR } from "@/lib/mockData";
 
 interface HeaderProps {
   activeTab: string;
-  onNavigateToUpload: () => void;
+  operatorId?: string;
+  onNavigateToUpload?: () => void;
+  onToggleSidebar?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ activeTab, onNavigateToUpload }) => {
-  const [currentTime, setCurrentTime] = useState<string>("");
+interface Notification {
+  id: string;
+  operator_id: string;
+  type: "success" | "warning" | "alert";
+  title: string;
+  desc_text: string;
+  read: boolean;
+  created_at: string;
+}
+
+export const Header: React.FC<HeaderProps> = ({ activeTab, operatorId, onToggleSidebar }) => {
   const [showNotifications, setShowNotifications] = useState(false);
-  const [notifications, setNotifications] = useState([
-    {
-      id: 1,
-      type: "success",
-      title: "Episode Approved (+ $22.50)",
-      desc: "EP-8942-01 (Dishwasher A) passed Auto-QA and Kinematic audit.",
-      time: "15m ago",
-      read: false,
-    },
-    {
-      id: 2,
-      type: "warning",
-      title: "Hardware Telemetry Notice",
-      desc: "RealSense D435i wrist camera firmware update v5.14.0 available.",
-      time: "2h ago",
-      read: false,
-    },
-    {
-      id: 3,
-      type: "alert",
-      title: "Episode QA Rejected",
-      desc: "EP-8938-05 rejected due to dropped depth frames. Re-upload requested.",
-      time: "5h ago",
-      read: true,
-    },
-  ]);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
 
   useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      setCurrentTime(
-        now.toLocaleTimeString("en-US", {
-          hour12: false,
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        }) + " UTC"
-      );
+    if (!operatorId) return;
+
+    const supabase = createClient();
+
+    // 1. Fetch initial notifications
+    const fetchNotifications = async () => {
+      const { data, error } = await supabase
+        .from("notifications")
+        .select("*")
+        .eq("operator_id", operatorId)
+        .order("created_at", { ascending: false })
+        .limit(10);
+
+      if (error) {
+        console.error("Error fetching notifications:", error);
+        return;
+      }
+      if (data) {
+        setNotifications(data);
+      }
     };
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-  }, []);
+
+    fetchNotifications();
+
+    // 2. Realtime Postgres Changes Subscription
+    const channel = supabase
+      .channel(`notifications-${operatorId}`)
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "notifications",
+          filter: `operator_id=eq.${operatorId}`,
+        },
+        (payload) => {
+          console.log("Realtime notification received:", payload);
+          if (payload.eventType === "INSERT") {
+            setNotifications((prev) => [payload.new, ...prev]);
+          } else {
+            // Re-fetch to keep it simple for update/delete changes
+            fetchNotifications();
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [operatorId]);
+
+  const markAllAsRead = async () => {
+    if (!operatorId) return;
+    const supabase = createClient();
+    const { error } = await supabase
+      .from("notifications")
+      .update({ read: true })
+      .eq("operator_id", operatorId);
+
+    if (error) {
+      console.error("Error marking notifications as read:", error);
+      return;
+    }
+    // Update local state
+    setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
+    setShowNotifications(false);
+  };
 
   const unreadCount = notifications.filter((n) => !n.read).length;
 
   return (
     <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-zinc-200 bg-zinc-50/80 px-6 backdrop-blur-xl">
-      {/* Left: Active View Breadcrumb & Rig Telemetry */}
+      {/* Left: Active View Title */}
       <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-semibold tracking-wider text-zinc-500 uppercase">
-            Creator Dashboard
-          </span>
-          <span className="text-zinc-600">/</span>
-          <span className="text-sm font-medium text-zinc-900 capitalize">
-            {activeTab.replace("-", " ")}
-          </span>
-        </div>
-
-
-      </div>
-
-      {/* Right: Telemetry, Clock, Quick Ingest & Notifications */}
-      <div className="flex items-center gap-3">
-        {/* UTC Clock */}
-        <div className="hidden items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-3 py-1.5 font-mono text-xs text-zinc-500 md:flex">
-          <Radio className="h-3.5 w-3.5 text-black animate-pulse" />
-          <span>{currentTime || "00:00:00 UTC"}</span>
-        </div>
-
-
-
-        {/* Submit Video CTA */}
-        {activeTab !== "upload" && (
+        {onToggleSidebar && (
           <button
-            onClick={onNavigateToUpload}
-            className="flex items-center gap-2 rounded-lg border border-black bg-black px-3.5 py-1.5 text-xs font-semibold text-white transition-all hover:bg-zinc-800 active:scale-95"
+            onClick={onToggleSidebar}
+            className="mr-2 flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-200 bg-white text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 md:hidden"
+            aria-label="Toggle Menu"
           >
-            <Sparkles className="h-3.5 w-3.5 text-white" />
-            <span>Submit Video</span>
+            <Menu className="h-4.5 w-4.5" />
           </button>
         )}
+        <div className="flex items-center">
+          <span 
+            className="text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-zinc-700 to-black capitalize"
+            style={{ fontFamily: "var(--font-plus-jakarta), sans-serif" }}
+          >
+            {activeTab === "payouts-qa" ? "Payouts & QA" : activeTab.replace("-", " ")}
+          </span>
+        </div>
+      </div>
 
+      {/* Right: Notifications */}
+      <div className="flex items-center gap-3">
         {/* Notifications Popover */}
         <div className="relative">
           <button
@@ -153,18 +173,20 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, onNavigateToUpload })
                   >
                     <div className="flex items-start justify-between">
                       <p className="font-semibold text-zinc-800">{n.title}</p>
-                      <span className="text-[10px] text-zinc-500 font-mono">{n.time}</span>
+                      <span className="text-[10px] text-zinc-500 font-mono">
+                        {new Date(n.created_at).toLocaleTimeString("en-US", {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </span>
                     </div>
-                    <p className="mt-1 text-[11px] text-zinc-500 leading-relaxed">{n.desc}</p>
+                    <p className="mt-1 text-[11px] text-zinc-500 leading-relaxed">{n.desc_text}</p>
                   </div>
                 ))}
               </div>
 
               <button
-                onClick={() => {
-                  setNotifications(notifications.map((n) => ({ ...n, read: true })));
-                  setShowNotifications(false);
-                }}
+                onClick={markAllAsRead}
                 className="mt-3 w-full rounded-md border border-zinc-200 bg-white py-1.5 text-center text-xs font-medium text-zinc-500 hover:bg-zinc-100 hover:text-zinc-800"
               >
                 Mark all as acknowledged

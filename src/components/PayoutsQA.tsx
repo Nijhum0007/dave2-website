@@ -45,7 +45,7 @@ export const PayoutsQA: React.FC<PayoutsQAProps> = ({
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <span className="rounded-md bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-400 border border-emerald-500/20">
+              <span className="rounded-md bg-emerald-50 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-700 border border-emerald-200">
                 FINANCIAL & QUALITY ASSURANCE
               </span>
               <span className="text-xs text-zinc-500">Automated Escrow & Video Review</span>
@@ -65,8 +65,8 @@ export const PayoutsQA: React.FC<PayoutsQAProps> = ({
                 onClick={() => setActiveTab("overview")}
                 className={`rounded-lg px-3 py-1.5 font-semibold text-xs transition-all ${
                   activeTab === "overview"
-                    ? "bg-zinc-100 text-cyan-300 shadow-sm"
-                    : "text-zinc-500 hover:text-zinc-800"
+                    ? "bg-zinc-900 text-white shadow-sm"
+                    : "text-zinc-600 hover:text-zinc-950"
                 }`}
               >
                 Earnings Summary
@@ -75,12 +75,16 @@ export const PayoutsQA: React.FC<PayoutsQAProps> = ({
                 onClick={() => setActiveTab("rejections")}
                 className={`rounded-lg px-3 py-1.5 font-semibold text-xs transition-all flex items-center gap-1.5 ${
                   activeTab === "rejections"
-                    ? "bg-zinc-100 text-rose-300 shadow-sm"
-                    : "text-zinc-500 hover:text-zinc-800"
+                    ? "bg-zinc-900 text-white shadow-sm"
+                    : "text-zinc-600 hover:text-zinc-950"
                 }`}
               >
                 <span>QA Diagnostics</span>
-                <span className="rounded-full bg-rose-500/20 px-1.5 py-0.2 font-mono text-[10px] text-rose-400">
+                <span className={`rounded-full px-1.5 py-0.2 font-mono text-[10px] border ${
+                  activeTab === "rejections"
+                    ? "bg-zinc-800 border-zinc-700 text-zinc-200"
+                    : "bg-rose-50 border-rose-200 text-rose-700"
+                }`}>
                   {rejectedEpisodes.length}
                 </span>
               </button>
@@ -88,8 +92,8 @@ export const PayoutsQA: React.FC<PayoutsQAProps> = ({
                 onClick={() => setActiveTab("history")}
                 className={`rounded-lg px-3 py-1.5 font-semibold text-xs transition-all ${
                   activeTab === "history"
-                    ? "bg-zinc-100 text-emerald-300 shadow-sm"
-                    : "text-zinc-500 hover:text-zinc-800"
+                    ? "bg-zinc-900 text-white shadow-sm"
+                    : "text-zinc-600 hover:text-zinc-950"
                 }`}
               >
                 Payout History
@@ -104,11 +108,11 @@ export const PayoutsQA: React.FC<PayoutsQAProps> = ({
         <div className="space-y-6">
           {/* Earnings Overview Cards */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-5 shadow-sm">
+            <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm">
               <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
                 Current Cycle Balance
               </span>
-              <div className="mt-2 text-3xl font-black font-mono text-emerald-600">
+              <div className="mt-2 text-3xl font-black font-mono text-zinc-900">
                 {formatCurrency(currentCycleBalance)}
               </div>
               <p className="mt-1 text-[11px] text-zinc-500">Scheduled for next payout cycle</p>
@@ -129,8 +133,8 @@ export const PayoutsQA: React.FC<PayoutsQAProps> = ({
                 Creator Quality Tier
               </span>
               <div className="mt-2 flex items-baseline gap-2">
-                <span className="text-3xl font-black font-mono text-black">{qualityTierPercentage}%</span>
-                <span className="text-xs font-semibold text-emerald-400">Tier 1 Verified</span>
+                <span className="text-3xl font-black font-mono text-zinc-900">{qualityTierPercentage}%</span>
+                <span className="text-xs font-semibold text-emerald-700">Tier 1 Verified</span>
               </div>
               <p className="mt-1 text-[11px] text-zinc-500">Quality score based on approvals</p>
             </div>
@@ -146,36 +150,36 @@ export const PayoutsQA: React.FC<PayoutsQAProps> = ({
               <div className="space-y-3">
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-zinc-700">Clinical - Surgical Tool Handover</span>
-                  <span className="font-mono text-cyan-300 font-bold">$0.00 (0 ep)</span>
+                  <span className="font-mono text-cyan-700 font-bold">$0.00 (0 ep)</span>
                 </div>
                 <div className="h-2 w-full overflow-hidden rounded-full bg-zinc-100">
-                  <div className="h-full w-[0%] rounded-full bg-cyan-400"></div>
+                  <div className="h-full w-[0%] rounded-full bg-cyan-600"></div>
                 </div>
 
                 <div className="flex items-center justify-between text-xs pt-2">
                   <span className="text-zinc-700">Household - Load Dishwasher A</span>
-                  <span className="font-mono text-emerald-300 font-bold">$0.00 (0 ep)</span>
+                  <span className="font-mono text-emerald-700 font-bold">$0.00 (0 ep)</span>
                 </div>
                 <div className="h-2 w-full overflow-hidden rounded-full bg-zinc-100">
-                  <div className="h-full w-[0%] rounded-full bg-emerald-400"></div>
+                  <div className="h-full w-[0%] rounded-full bg-emerald-600"></div>
                 </div>
               </div>
 
               <div className="space-y-3">
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-zinc-700">Warehouse - Cable Routing Bay B</span>
-                  <span className="font-mono text-purple-300 font-bold">$0.00 (0 ep)</span>
+                  <span className="font-mono text-purple-700 font-bold">$0.00 (0 ep)</span>
                 </div>
                 <div className="h-2 w-full overflow-hidden rounded-full bg-zinc-100">
-                  <div className="h-full w-[0%] rounded-full bg-purple-400"></div>
+                  <div className="h-full w-[0%] rounded-full bg-purple-600"></div>
                 </div>
 
                 <div className="flex items-center justify-between text-xs pt-2">
                   <span className="text-zinc-700">Industrial & Agriculture</span>
-                  <span className="font-mono text-amber-300 font-bold">$0.00 (0 ep)</span>
+                  <span className="font-mono text-amber-700 font-bold">$0.00 (0 ep)</span>
                 </div>
                 <div className="h-2 w-full overflow-hidden rounded-full bg-zinc-100">
-                  <div className="h-full w-[0%] rounded-full bg-amber-400"></div>
+                  <div className="h-full w-[0%] rounded-full bg-amber-600"></div>
                 </div>
               </div>
             </div>
@@ -186,9 +190,9 @@ export const PayoutsQA: React.FC<PayoutsQAProps> = ({
       {/* QA Rejections Diagnostics Tab */}
       {activeTab === "rejections" && (
         <div className="space-y-6">
-          <div className="rounded-2xl border border-rose-200 bg-rose-50 p-6">
+          <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-500/20 text-rose-400 border border-rose-500/30">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-50 text-rose-600 border border-rose-200">
                 <AlertOctagon className="h-5 w-5" />
               </div>
               <div>
@@ -205,11 +209,11 @@ export const PayoutsQA: React.FC<PayoutsQAProps> = ({
               {rejectedEpisodes.map((ep) => (
                 <div
                   key={ep.id}
-                  className="rounded-xl border border-rose-500/30 bg-white p-4 space-y-3"
+                  className="rounded-xl border border-zinc-200 bg-white p-4 space-y-3"
                 >
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between pb-2 border-b border-zinc-200">
                     <div className="flex items-center gap-2 font-mono">
-                      <span className="text-sm font-bold text-rose-400">{ep.id}</span>
+                      <span className="text-sm font-bold text-rose-600">{ep.id}</span>
                       <span className="text-zinc-600">•</span>
                       <span className="text-xs font-semibold text-zinc-800">{ep.recipeTitle}</span>
                     </div>
@@ -278,12 +282,12 @@ export const PayoutsQA: React.FC<PayoutsQAProps> = ({
                     <td className="py-3.5 px-3 text-zinc-500 font-sans">{p.paidDate}</td>
                     <td className="py-3.5 px-3 text-right font-sans">
                       {p.status === "PAID" ? (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-0.5 text-[11px] font-bold text-emerald-600 border border-emerald-200">
-                          <CheckCircle2 className="h-3 w-3" /> Paid
+                        <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700 border border-emerald-200">
+                          <CheckCircle2 className="h-3 w-3 text-emerald-600" /> Paid
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-0.5 text-[11px] font-bold text-amber-600 border border-amber-200">
-                          <Clock className="h-3 w-3" /> Processing
+                        <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-0.5 text-[11px] font-semibold text-amber-700 border border-amber-200">
+                          <Clock className="h-3 w-3 animate-spin text-amber-600" /> Processing
                         </span>
                       )}
                     </td>

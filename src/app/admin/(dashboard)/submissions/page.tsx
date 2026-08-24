@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { EpisodeSubmission } from '@/lib/types';
 import { formatBytes } from '@/lib/utils';
@@ -18,7 +18,7 @@ export default function SubmissionsPage() {
   const [qaScore, setQaScore] = useState<number>(100);
   const [qaLoading, setQaLoading] = useState(false);
 
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
 
   useEffect(() => {
     fetchSubmissions();
@@ -37,7 +37,7 @@ export default function SubmissionsPage() {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [supabase]);
+  }, []);
 
   const fetchSubmissions = async () => {
     const { data, error } = await supabase

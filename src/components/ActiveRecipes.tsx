@@ -46,7 +46,7 @@ export const ActiveRecipes: React.FC<ActiveRecipesProps> = ({
   return (
     <div className="space-y-6">
       {/* Header & Filter Row */}
-      <div className="rounded-2xl border border-zinc-200 glass-panel p-6 shadow-xl">
+      <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <div className="flex items-center gap-2">
@@ -86,8 +86,8 @@ export const ActiveRecipes: React.FC<ActiveRecipesProps> = ({
               onClick={() => setSelectedEnv(env)}
               className={`rounded-xl px-3 py-1.5 text-xs font-semibold transition-all ${
                 selectedEnv === env
-                  ? "border border-black bg-zinc-100 text-zinc-900 shadow-sm"
-                  : "border border-zinc-200 bg-white text-zinc-500 hover:border-zinc-300 hover:text-zinc-800"
+                  ? "bg-zinc-900 text-white shadow-sm"
+                  : "border border-zinc-200 bg-white text-zinc-500 hover:border-zinc-300 hover:text-zinc-950"
               }`}
             >
               {env === "ALL" ? "All Environments" : env}
@@ -185,8 +185,8 @@ export const ActiveRecipes: React.FC<ActiveRecipesProps> = ({
 
       {/* Recipe Specifications Modal */}
       {selectedRecipeDetail && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-in fade-in duration-150">
-          <div className="relative w-full max-w-xl rounded-2xl border border-zinc-200 glass-dropdown p-6 shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in duration-150">
+          <div className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl border border-zinc-200 bg-white p-6 shadow-2xl">
             <div className="flex items-center justify-between pb-4 border-b border-zinc-200">
               <div>
                 <span className="font-mono text-[10px] text-black font-bold uppercase">

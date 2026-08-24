@@ -219,8 +219,8 @@ export const UploadZone: React.FC<UploadZoneProps> = ({
         </div>
       ) : (
         /* Success State */
-        <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-8 shadow-sm text-center">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 mb-4">
+        <div className="rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm text-center">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50 border border-emerald-200 mb-4">
             <CheckCircle2 className="h-8 w-8 text-emerald-600" />
           </div>
           <h3 className="text-lg font-bold text-zinc-900 mb-2">Video Successfully Submitted!</h3>
