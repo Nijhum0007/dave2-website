@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, XCircle, AlertTriangle, ShieldCheck, Zap, Camera } from "lucide-react";
 import { LandingNavbar } from "@/components/LandingNavbar";
+import Footer from "@/components/Footer";
 
 export default function GuidelinesPage() {
   return (
@@ -373,64 +374,7 @@ export default function GuidelinesPage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-black text-white pt-24 pb-12 px-6 lg:px-8 mt-auto">
-        <div className="mx-auto max-w-[1400px]">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-32">
-            <div className="flex flex-col gap-4">
-              <h4 className="text-[11px] font-mono uppercase tracking-widest text-zinc-500 mb-2">Platform</h4>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Creator App</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Weekly Payouts</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Task Board</Link>
-              <Link href="/guidelines" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Equipment Guide</Link>
-            </div>
-            <div className="flex flex-col gap-4">
-              <h4 className="text-[11px] font-mono uppercase tracking-widest text-zinc-500 mb-2">Use Cases</h4>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Smart Glasses</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Action Cameras</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Mobile Devices</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Dashcams</Link>
-            </div>
-            <div className="flex flex-col gap-4">
-              <h4 className="text-[11px] font-mono uppercase tracking-widest text-zinc-500 mb-2">Company</h4>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">About Us</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Careers</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Support Center</Link>
-            </div>
-            <div className="flex flex-col gap-4">
-              <h4 className="text-[11px] font-mono uppercase tracking-widest text-zinc-500 mb-2">Legal</h4>
-              <Link href="/guidelines" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Upload Guidelines</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Data Ethics</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Terms of Service</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Privacy Policy</Link>
-            </div>
-          </div>
-
-          <div className="mb-24 md:mb-40">
-            <h1 className="text-[11vw] leading-[0.95] font-medium tracking-tight text-white mb-4">
-              Real-world data<br />collected by<br />everyday people.
-            </h1>
-          </div>
-
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 border-t border-zinc-800 pt-8">
-            <div className="flex gap-3">
-              <a href="#" className="flex h-11 w-11 items-center justify-center rounded-md bg-[#1a1a1a] text-zinc-400 hover:bg-zinc-800 hover:text-white transition-colors">
-                <span className="font-bold font-sans text-sm">in</span>
-              </a>
-              <a href="#" className="flex h-11 w-11 items-center justify-center rounded-md bg-[#1a1a1a] text-zinc-400 hover:bg-zinc-800 hover:text-white transition-colors">
-                <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.008 5.936H5.045z"></path></svg>
-              </a>
-            </div>
-            <div className="flex flex-col md:text-right gap-3">
-              <a href="#" className="text-[10px] md:text-[11px] font-mono text-zinc-500 hover:text-white uppercase tracking-widest transition-colors">
-                Manage your cookie preferences
-              </a>
-              <div className="text-[10px] md:text-[11px] font-mono text-zinc-500 uppercase tracking-widest">
-                Copyright © 2026 Dave, Inc. All rights reserved. <Link href="#" className="hover:text-white transition-colors underline underline-offset-4 decoration-zinc-800 hover:decoration-white">Terms of Use</Link> & <Link href="#" className="hover:text-white transition-colors underline underline-offset-4 decoration-zinc-800 hover:decoration-white">Privacy Policy</Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

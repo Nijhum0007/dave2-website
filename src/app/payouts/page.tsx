@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { ArrowRight, Bot, Database, Shield, Zap, Terminal, Wallet, Cpu, CheckCircle, Activity, LayoutGrid, Clock, BadgeCheck, X } from "lucide-react";
 import { LandingNavbar } from "@/components/LandingNavbar";
+import Footer from "@/components/Footer";
 
 export default function PayoutsPage() {
   return (
@@ -28,7 +29,7 @@ export default function PayoutsPage() {
             <div className="group rounded-3xl overflow-hidden border border-zinc-200 bg-zinc-50 hover:shadow-xl transition-all duration-300">
               <div className="relative aspect-[4/3] w-full overflow-hidden bg-zinc-900">
                 <img
-                  src="/payout_everyday.png"
+                  src="/payout_everyday_gen.jpg"
                   alt="Everyday household tasks"
                   className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
                 />
@@ -52,7 +53,7 @@ export default function PayoutsPage() {
             <div className="group rounded-3xl overflow-hidden border border-zinc-200 bg-zinc-50 hover:shadow-xl transition-all duration-300">
               <div className="relative aspect-[4/3] w-full overflow-hidden bg-zinc-900">
                 <img
-                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80"
+                  src="/payout_industrial_gen.jpg"
                   alt="Industrial machinery"
                   className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
                 />
@@ -100,7 +101,7 @@ export default function PayoutsPage() {
                 </div>
                 <div className="rounded-2xl overflow-hidden aspect-video relative bg-zinc-100">
                   <img
-                    src="https://images.unsplash.com/photo-1507206130118-b5907f817163?auto=format&fit=crop&w=800&q=80"
+                    src="/payout_qa_grasp_gen.jpg"
                     alt="Clear image grasp"
                     className="w-full h-full object-cover"
                   />
@@ -115,7 +116,7 @@ export default function PayoutsPage() {
                 </div>
                 <div className="rounded-2xl overflow-hidden aspect-video relative bg-zinc-100">
                   <img
-                    src="https://images.unsplash.com/photo-1507206130118-b5907f817163?auto=format&fit=crop&w=800&q=80"
+                    src="/payout_qa_grasp_gen.jpg"
                     alt="Blurry image grasp"
                     className="w-full h-full object-cover blur-[6px] brightness-[0.6] scale-110 -rotate-3"
                   />
@@ -163,7 +164,7 @@ export default function PayoutsPage() {
               </div>
               <h3 className="text-xl font-medium text-black mb-4">Weekly Friday Sweeps</h3>
               <p className="text-zinc-600 leading-relaxed">
-                Automated direct deposits to your bank, debit card, or PayPal via Stripe Connect.
+                Automated direct deposits directly to your preferred account on file.
               </p>
             </div>
           </div>
@@ -225,67 +226,7 @@ export default function PayoutsPage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-black text-white pt-24 pb-12 px-6 lg:px-8">
-        <div className="mx-auto max-w-[1400px]">
-          {/* Top Links Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-32">
-            <div className="flex flex-col gap-4">
-              <h4 className="text-[11px] font-mono uppercase tracking-widest text-zinc-500 mb-2">Platform</h4>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Creator App</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Weekly Payouts</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Task Board</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Equipment Guide</Link>
-            </div>
-            <div className="flex flex-col gap-4">
-              <h4 className="text-[11px] font-mono uppercase tracking-widest text-zinc-500 mb-2">Use Cases</h4>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Smart Glasses</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Action Cameras</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Mobile Devices</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Dashcams</Link>
-            </div>
-            <div className="flex flex-col gap-4">
-              <h4 className="text-[11px] font-mono uppercase tracking-widest text-zinc-500 mb-2">Company</h4>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">About Us</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Careers</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Support Center</Link>
-            </div>
-            <div className="flex flex-col gap-4">
-              <h4 className="text-[11px] font-mono uppercase tracking-widest text-zinc-500 mb-2">Legal</h4>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Upload Guidelines</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Data Ethics</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Terms of Service</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Privacy Policy</Link>
-            </div>
-          </div>
-
-          {/* Huge Statement */}
-          <div className="mb-24 md:mb-40">
-            <h1 className="text-[11vw] leading-[0.95] font-medium tracking-tight text-white mb-4">
-              Real-world data<br />collected by<br />everyday people.
-            </h1>
-          </div>
-
-          {/* Bottom Bar */}
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 border-t border-zinc-800 pt-8">
-            <div className="flex gap-3">
-              <a href="#" className="flex h-11 w-11 items-center justify-center rounded-md bg-[#1a1a1a] text-zinc-400 hover:bg-zinc-800 hover:text-white transition-colors">
-                <span className="font-bold font-sans text-sm">in</span>
-              </a>
-              <a href="#" className="flex h-11 w-11 items-center justify-center rounded-md bg-[#1a1a1a] text-zinc-400 hover:bg-zinc-800 hover:text-white transition-colors">
-                <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.008 5.936H5.045z"></path></svg>
-              </a>
-            </div>
-            <div className="flex flex-col md:text-right gap-3">
-              <a href="#" className="text-[10px] md:text-[11px] font-mono text-zinc-500 hover:text-white uppercase tracking-widest transition-colors">
-                Manage your cookie preferences
-              </a>
-              <div className="text-[10px] md:text-[11px] font-mono text-zinc-500 uppercase tracking-widest">
-                Copyright © 2026 Dave, Inc. All rights reserved. <Link href="#" className="hover:text-white transition-colors underline underline-offset-4 decoration-zinc-800 hover:decoration-white">Terms of Use</Link> & <Link href="#" className="hover:text-white transition-colors underline underline-offset-4 decoration-zinc-800 hover:decoration-white">Privacy Policy</Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

@@ -1,12 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
 import { ArrowRight, Bot, Database, Shield, Zap, Terminal, Wallet, Cpu, CheckCircle } from "lucide-react";
 import { LandingNavbar } from "@/components/LandingNavbar";
+import Footer from "@/components/Footer";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function LandingPage() {
   const [activeStoryIndex, setActiveStoryIndex] = useState(0);
+
+  const guidelinesRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: guidelinesRef,
+    offset: ["start start", "end end"]
+  });
+
+  const cardY = useTransform(scrollYProgress, [0, 0.15, 0.35], [100, 100, 0]);
+  const cardOpacity = useTransform(scrollYProgress, [0, 0.15, 0.35], [0, 0, 1]);
 
   const stories = [
     {
@@ -27,7 +38,7 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-white text-zinc-900 font-sans selection:bg-cyan-500 selection:text-white overflow-x-hidden">
+    <div className="min-h-screen bg-white text-zinc-900 font-sans selection:bg-cyan-500 selection:text-white overflow-clip">
       {/* Navbar */}
       <LandingNavbar />
 
@@ -251,63 +262,68 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Quality Guidelines & Uploading */}
-        <section className="px-4 md:px-6 py-24 lg:py-32 border-t border-zinc-100 bg-white">
-          <div className="relative mx-auto max-w-[1400px] min-h-[700px] rounded-[1.5rem] overflow-hidden flex items-center p-6 md:p-12 lg:p-16 shadow-2xl border border-zinc-200/50">
-            {/* Video Background */}
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover"
-            >
-              <source src="/can_you_make_a_video_of_this_i.mp4" type="video/mp4" />
-            </video>
-            {/* Very Light Overlay to take the edge off */}
-            <div className="absolute inset-0 bg-zinc-950/20" />
+        {/* Quality Guidelines & Uploading - Scrollytelling */}
+        <section ref={guidelinesRef} className="relative h-[300vh] border-t border-zinc-100 bg-white">
+          <div className="sticky top-0 h-screen w-full flex items-center justify-center p-3 md:p-8 lg:p-12 overflow-hidden">
+            <div className="relative w-full max-w-[1400px] h-full max-h-[1200px] rounded-[1.5rem] overflow-hidden flex items-center p-3 md:p-12 lg:p-16 shadow-2xl border border-zinc-200/50">
+              {/* Video Background */}
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover"
+              >
+                <source src="/can_you_make_a_video_of_this_i.mp4" type="video/mp4" />
+              </video>
+              {/* Very Light Overlay to take the edge off */}
+              <div className="absolute inset-0 bg-zinc-950/20" />
 
-            {/* Content Area */}
-            <div className="relative z-10 w-full flex justify-end">
-              <div className="max-w-xl w-full bg-black/60 backdrop-blur-md rounded-3xl p-8 md:p-10 border border-white/10 shadow-2xl">
-                <div className="text-xs leading-6 tracking-[1px] mb-4 uppercase font-mono text-emerald-400">
-                  UPLOAD STANDARDS
-                </div>
-                <h2 className="text-3xl md:text-4xl font-medium text-white mb-6 text-balance">
-                  Recording Guidelines
-                </h2>
-                <p className="text-base text-zinc-300 mb-8 leading-relaxed">
-                  Follow these three simple rules when recording your tasks to make sure your videos are approved and you get paid fast.
-                </p>
-                <ul className="space-y-6">
-                  <li className="flex gap-4">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-white border border-white/20">
-                      <span className="font-bold font-mono">1</span>
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-white text-base mb-1">Clear Lighting & Focus</h4>
-                      <p className="text-sm text-zinc-400">Make sure your room is well-lit and the camera lens is clean. Blurry or dark videos can't be used.</p>
-                    </div>
-                  </li>
-                  <li className="flex gap-4">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-white border border-white/20">
-                      <span className="font-bold font-mono">2</span>
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-white text-base mb-1">Record the Whole Task</h4>
-                      <p className="text-sm text-zinc-400">Start recording before you begin the task and don't stop until it's completely finished. No editing or cutting.</p>
-                    </div>
-                  </li>
-                  <li className="flex gap-4">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-white border border-white/20">
-                      <span className="font-bold font-mono">3</span>
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-white text-base mb-1">Keep Your Hands Visible</h4>
-                      <p className="text-sm text-zinc-400">If you're using a chest cam or smart glasses, make sure both of your hands are clearly visible in the video frame while you work.</p>
-                    </div>
-                  </li>
-                </ul>
+              {/* Content Area */}
+              <div className="relative z-10 w-full h-full flex items-center md:items-center justify-center md:justify-end">
+                <motion.div 
+                  style={{ y: cardY, opacity: cardOpacity }}
+                  className="max-w-xl w-full bg-black/80 backdrop-blur-md rounded-3xl p-6 md:p-10 border border-white/10 shadow-2xl"
+                >
+                  <div className="text-[10px] md:text-xs leading-6 tracking-[1px] mb-2 md:mb-4 uppercase font-mono text-emerald-400 [text-shadow:_0_1px_2px_rgb(0_0_0_/_0.8)]">
+                    UPLOAD STANDARDS
+                  </div>
+                  <h2 className="text-2xl md:text-4xl font-medium text-white mb-3 md:mb-6 text-balance [text-shadow:_0_2px_4px_rgb(0_0_0_/_0.8)]">
+                    Recording Guidelines
+                  </h2>
+                  <p className="text-sm md:text-base text-zinc-300 mb-5 md:mb-8 leading-relaxed [text-shadow:_0_1px_2px_rgb(0_0_0_/_0.8)]">
+                    Follow these three simple rules when recording your tasks to make sure your videos are approved and you get paid fast.
+                  </p>
+                  <ul className="space-y-3 md:space-y-6">
+                    <li className="flex gap-3 md:gap-4">
+                      <div className="flex h-6 w-6 md:h-8 md:w-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-white border border-white/20">
+                        <span className="text-xs md:text-base font-bold font-mono">1</span>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-white text-sm md:text-base mb-0.5 md:mb-1 [text-shadow:_0_1px_2px_rgb(0_0_0_/_0.8)]">Clear Lighting & Focus</h4>
+                        <p className="text-xs md:text-sm text-zinc-300 [text-shadow:_0_1px_2px_rgb(0_0_0_/_0.8)]">Make sure your room is well-lit and the camera lens is clean. Blurry or dark videos can't be used.</p>
+                      </div>
+                    </li>
+                    <li className="flex gap-3 md:gap-4">
+                      <div className="flex h-6 w-6 md:h-8 md:w-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-white border border-white/20">
+                        <span className="text-xs md:text-base font-bold font-mono">2</span>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-white text-sm md:text-base mb-0.5 md:mb-1 [text-shadow:_0_1px_2px_rgb(0_0_0_/_0.8)]">Record the Whole Task</h4>
+                        <p className="text-xs md:text-sm text-zinc-300 [text-shadow:_0_1px_2px_rgb(0_0_0_/_0.8)]">Start recording before you begin the task and don't stop until it's completely finished. No editing or cutting.</p>
+                      </div>
+                    </li>
+                    <li className="flex gap-3 md:gap-4">
+                      <div className="flex h-6 w-6 md:h-8 md:w-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-white border border-white/20">
+                        <span className="text-xs md:text-base font-bold font-mono">3</span>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-white text-sm md:text-base mb-0.5 md:mb-1 [text-shadow:_0_1px_2px_rgb(0_0_0_/_0.8)]">Keep Your Hands Visible</h4>
+                        <p className="text-xs md:text-sm text-zinc-300 [text-shadow:_0_1px_2px_rgb(0_0_0_/_0.8)]">If you're using a chest cam or smart glasses, make sure both of your hands are clearly visible in the video frame while you work.</p>
+                      </div>
+                    </li>
+                  </ul>
+                </motion.div>
               </div>
             </div>
           </div>
@@ -383,67 +399,7 @@ export default function LandingPage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-black text-white pt-24 pb-12 px-6 lg:px-8">
-        <div className="mx-auto max-w-[1400px]">
-          {/* Top Links Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-32">
-            <div className="flex flex-col gap-4">
-              <h4 className="text-[11px] font-mono uppercase tracking-widest text-zinc-500 mb-2">Platform</h4>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Creator App</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Weekly Payouts</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Task Board</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Equipment Guide</Link>
-            </div>
-            <div className="flex flex-col gap-4">
-              <h4 className="text-[11px] font-mono uppercase tracking-widest text-zinc-500 mb-2">Use Cases</h4>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Smart Glasses</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Action Cameras</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Mobile Devices</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Dashcams</Link>
-            </div>
-            <div className="flex flex-col gap-4">
-              <h4 className="text-[11px] font-mono uppercase tracking-widest text-zinc-500 mb-2">Company</h4>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">About Us</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Careers</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Support Center</Link>
-            </div>
-            <div className="flex flex-col gap-4">
-              <h4 className="text-[11px] font-mono uppercase tracking-widest text-zinc-500 mb-2">Legal</h4>
-              <Link href="/guidelines" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Upload Guidelines</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Data Ethics</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Terms of Service</Link>
-              <Link href="#" className="text-[15px] text-zinc-300 hover:text-white transition-colors">Privacy Policy</Link>
-            </div>
-          </div>
-
-          {/* Huge Statement */}
-          <div className="mb-24 md:mb-40">
-            <h1 className="text-[11vw] leading-[0.95] font-medium tracking-tight text-white mb-4">
-              Real-world data<br />collected by<br />everyday people.
-            </h1>
-          </div>
-
-          {/* Bottom Bar */}
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 border-t border-zinc-800 pt-8">
-            <div className="flex gap-3">
-              <a href="#" className="flex h-11 w-11 items-center justify-center rounded-md bg-[#1a1a1a] text-zinc-400 hover:bg-zinc-800 hover:text-white transition-colors">
-                <span className="font-bold font-sans text-sm">in</span>
-              </a>
-              <a href="#" className="flex h-11 w-11 items-center justify-center rounded-md bg-[#1a1a1a] text-zinc-400 hover:bg-zinc-800 hover:text-white transition-colors">
-                <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.008 5.936H5.045z"></path></svg>
-              </a>
-            </div>
-            <div className="flex flex-col md:text-right gap-3">
-              <a href="#" className="text-[10px] md:text-[11px] font-mono text-zinc-500 hover:text-white uppercase tracking-widest transition-colors">
-                Manage your cookie preferences
-              </a>
-              <div className="text-[10px] md:text-[11px] font-mono text-zinc-500 uppercase tracking-widest">
-                Copyright © 2026 Dave, Inc. All rights reserved. <Link href="#" className="hover:text-white transition-colors underline underline-offset-4 decoration-zinc-800 hover:decoration-white">Terms of Use</Link> & <Link href="#" className="hover:text-white transition-colors underline underline-offset-4 decoration-zinc-800 hover:decoration-white">Privacy Policy</Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
